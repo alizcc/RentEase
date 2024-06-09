@@ -75,6 +75,7 @@
             app:backgroundTint="@null" />
 
         <TextView
+            android:id="@+id/tvRegister"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"

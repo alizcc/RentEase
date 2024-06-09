@@ -37,7 +37,21 @@
                 android:inputType="textPersonName"
                 android:textSize="12sp"
                 android:maxLines="1"
-                android:hint="@string/name"/>
+                android:hint="@string/full_name"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp">
+            <EditText
+                android:id="@+id/txtUsername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:textSize="12sp"
+                android:maxLines="1"
+                android:hint="@string/username"/>
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -92,7 +106,7 @@
                 android:hint="@string/confirm_password"/>
         </com.google.android.material.textfield.TextInputLayout>
         <Button
-            android:id="@+id/btnLogin"
+            android:id="@+id/btnRegister"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:backgroundTint="@null"
@@ -104,6 +118,7 @@
             android:layout_marginTop="20dp"/>
 
         <TextView
+            android:id="@+id/tvLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"
