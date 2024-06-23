@@ -15,4 +15,21 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="btn_sign_up">Sign Up</string>
     <string name="already_have_an_account_sign_in">Already have an account? Sign In</string>
+    <string name="add">add</string>
+    <string name="hint_search">Search</string>
+    <string name="name">Name</string>
+    <string name="search_region">Search region</string>
+    <string name="filter_more">Filter more</string>
+    <string name="search_city">Search city</string>
+    <string name="price_range">Price range</string>
+    <string name="types">Types</string>
+    <string name="type_condo">Condo</string>
+    <string name="type_apartment">Apartment</string>
+    <string name="type_studio">Studio</string>
+    <string name="type_house">House</string>
+    <string name="type_bungalow">Bungalow</string>
+    <string name="type_townhouse">TownHouse</string>
+    <string name="quarter">Quarter</string>
+    <string name="filter">Filter</string>
+    <string name="search_quarter">Search quarter</string>
 </resources>

@@ -57,4 +57,9 @@ dependencies {
     implementation("androidx.room:room-runtime:$roomVersion")
     annotationProcessor("androidx.room:room-compiler:$roomVersion")
     kapt("androidx.room:room-compiler:$roomVersion")
+
+    // circular image
+    implementation("de.hdodenhof:circleimageview:3.1.0")
+    // network image
+    implementation("com.github.bumptech.glide:glide:4.13.0")
 }

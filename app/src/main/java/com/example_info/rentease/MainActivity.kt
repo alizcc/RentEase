@@ -3,6 +3,7 @@ package com.example_info.rentease
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example_info.rentease.di.AliceInitializer
+import com.example_info.rentease.features.HomeFragment
 import com.example_info.rentease.features.LoginFragment
 import com.example_info.rentease.navigation.AliceNavigator
 import com.example_info.rentease.preferences.MainPreferences

@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.example_info.rentease.HomeFragment
 import com.example_info.rentease.database.dao.UserDao
 import com.example_info.rentease.databinding.FragmentLoginBinding
 import com.example_info.rentease.di.AliceInitializer

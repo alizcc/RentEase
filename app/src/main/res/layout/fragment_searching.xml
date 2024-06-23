@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".features.HomeFragment">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:animateLayoutChanges="true"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/btnOpenFilter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/add"
+                    android:src="@drawable/ic_filter"
+                    android:visibility="gone" />
+
+                <ImageButton
+                    android:id="@+id/btnCloseFilter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="@string/add"
+                    android:src="@drawable/ic_close" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llFilter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:orientation="vertical"
+                android:paddingHorizontal="16dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/filter"
+                    android:textColor="#aaa"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/edtSearchCity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:autofillHints="name"
+                    android:background="@drawable/bg_search_box"
+                    android:focusable="true"
+                    android:hint="@string/search_city"
+                    android:inputType="text"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="10dp"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/edtSearchRegion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:autofillHints="name"
+                    android:background="@drawable/bg_search_box"
+                    android:focusable="true"
+                    android:hint="@string/search_region"
+                    android:inputType="text"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="10dp"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/edtSearchQuarter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
+                    android:autofillHints="name"
+                    android:background="@drawable/bg_search_box"
+                    android:focusable="true"
+                    android:hint="@string/search_quarter"
+                    android:inputType="text"
+                    android:paddingHorizontal="20dp"
+                    android:paddingVertical="10dp"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:text="@string/price_range"
+                        android:textColor="#aaa" />
+
+                    <TextView
+                        android:id="@+id/tvPriceRange"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginTop="8dp"
+                        android:textColor="#aaa"
+                        android:textStyle="bold"
+                        tools:text="0 - 10000000" />
+
+                </LinearLayout>
+
+                <com.google.android.material.slider.RangeSlider
+                    android:id="@+id/sliderPrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:stepSize="1"
+                    android:valueFrom="0"
+                    android:valueTo="50"
+                    app:values="@array/initial_price_range_value" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="@string/types"
+                    android:textColor="#aaa" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        android:id="@+id/cbCondo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/type_condo" />
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        android:id="@+id/cbApartment"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/type_apartment" />
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        android:id="@+id/cbStudio"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/type_studio" />
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        android:id="@+id/cbHouse"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/type_house" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        android:id="@+id/cbBungalow"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/type_bungalow" />
+
+                    <com.google.android.material.checkbox.MaterialCheckBox
+                        android:id="@+id/cbTownHouse"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/type_townhouse" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <com.google.android.material.divider.MaterialDivider
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp" />
+
+            <TextView
+                android:id="@+id/tvResult"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
+                android:textColor="#999"
+                android:textStyle="bold"
+                tools:text="Results (0)" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcyItems"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="18dp"
+                android:layout_weight="1"
+                android:clipToPadding="false"
+                android:orientation="vertical"
+                android:paddingHorizontal="16dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,10 +6,8 @@ import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.example_info.rentease.HomeFragment
 import com.example_info.rentease.database.dao.UserDao
 import com.example_info.rentease.database.entity.UserEntity
 import com.example_info.rentease.databinding.FragmentRegisterBinding
