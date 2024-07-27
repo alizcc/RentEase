@@ -56,6 +56,20 @@
                     android:textStyle="italic" />
                 <include android:id="@+id/incRegister" layout="@layout/layout_register"/>
             </LinearLayout>
+
+
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/add"
+                app:tint="@color/white"
+                android:visibility="gone"
+                android:src="@drawable/ic_back_arrow"
+                />
+
         </RelativeLayout>
     </ScrollView>
 

@@ -107,6 +107,7 @@ class RegisterFragment : Fragment() {
             binding.incRegister.btnRegister.text = "UPDATE"
             binding.incRegister.tvTitle.text = "Update Profile"
             binding.incRegister.tvLogin.isVisible = false
+            binding.btnBack.isVisible = true
         }
     }
 
@@ -116,6 +117,9 @@ class RegisterFragment : Fragment() {
         }
         binding.incRegister.btnRegister.setOnClickListener {
             checkValidation()
+        }
+        binding.btnBack.setOnClickListener {
+            navigator.popBackStack()
         }
     }
 
