@@ -78,13 +78,14 @@ class HomeFragment : Fragment() {
         val types = getSampleTabTypes(5)
         types.forEach { type ->
             val tab = binding.tlTypes.newTab()
-            tab.text = type
+            tab.text = type.second
+            tab.tag = type.first
             binding.tlTypes.addTab(tab)
         }
         binding.tlTypes.addOnTabSelectedListener(object : OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 tab?.let {
-                    val selectedType = it.text.toString()
+                    val selectedType = it.tag.toString()
                     reloadItems(selectedType)
                 }
             }

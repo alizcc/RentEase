@@ -47,7 +47,7 @@ class RentPreviewAdapter(
                 .with(binding.root.context)
                 .load(item.previewImage)
                 .into(binding.ivPoster)
-            binding.tvTitle.text = item.city
+            binding.tvTitle.text = "${item.quarter}၊ ${item.region}"
             binding.tvDescription.text = item.city
             binding.tvPrice.text = getReadablePrice(item.price)
             binding.root.setOnClickListener {

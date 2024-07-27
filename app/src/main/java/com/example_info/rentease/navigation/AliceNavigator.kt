@@ -24,4 +24,10 @@ class AliceNavigator(
         transition.commit()
     }
 
+    fun popBackStack() {
+        if (fragmentManager.backStackEntryCount > 0) {
+            fragmentManager.popBackStack()
+        }
+    }
+
 }

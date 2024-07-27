@@ -19,31 +19,51 @@
             android:animateLayoutChanges="true"
             android:orientation="vertical">
 
-            <LinearLayout
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
-                android:gravity="center"
                 android:orientation="horizontal">
 
                 <ImageButton
-                    android:id="@+id/btnOpenFilter"
+                    android:id="@+id/btnBack"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:contentDescription="@string/add"
-                    android:src="@drawable/ic_filter"
-                    android:visibility="gone" />
+                    android:src="@drawable/ic_back_arrow"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
-                <ImageButton
-                    android:id="@+id/btnCloseFilter"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:background="?attr/selectableItemBackgroundBorderless"
-                    android:contentDescription="@string/add"
-                    android:src="@drawable/ic_close" />
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
 
-            </LinearLayout>
+                    <ImageButton
+                        android:id="@+id/btnOpenFilter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="@string/add"
+                        android:src="@drawable/ic_filter"
+                        android:visibility="gone" />
+
+                    <ImageButton
+                        android:id="@+id/btnCloseFilter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="?attr/selectableItemBackgroundBorderless"
+                        android:contentDescription="@string/add"
+                        android:src="@drawable/ic_close" />
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
                 android:id="@+id/llFilter"
@@ -132,15 +152,52 @@
 
                 </LinearLayout>
 
-                <com.google.android.material.slider.RangeSlider
-                    android:id="@+id/sliderPrice"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:stepSize="1"
-                    android:valueFrom="0"
-                    android:valueTo="50"
-                    app:values="@array/initial_price_range_value" />
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="Min price"
+                            android:textColor="#aaa" />
+
+                        <Spinner
+                            android:id="@+id/spinnerMinPrice"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="Max price"
+                            android:textColor="#aaa" />
+
+                        <Spinner
+                            android:id="@+id/spinnerMaxPrice"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -170,13 +227,13 @@
                         android:id="@+id/cbStudio"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/type_studio" />
+                        android:text="@string/type_mini_condo" />
 
                     <com.google.android.material.checkbox.MaterialCheckBox
                         android:id="@+id/cbHouse"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/type_house" />
+                        android:text="@string/type_hostel" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -194,7 +251,7 @@
                         android:id="@+id/cbTownHouse"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/type_townhouse" />
+                        android:text="@string/type_field" />
                 </LinearLayout>
 
             </LinearLayout>

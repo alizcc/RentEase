@@ -1,9 +1,12 @@
 package com.example_info.rentease.features
 
+import android.R
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
@@ -12,6 +15,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example_info.rentease.adapter.RentPreviewAdapter
 import com.example_info.rentease.databinding.FragmentSearchingBinding
 import com.example_info.rentease.mock.getSampleRentPreviewItems
+import com.example_info.rentease.navigation.AliceNavigator
+import com.example_info.rentease.util.helper.asCommaSeparated
+import com.example_info.rentease.util.helper.showToast
 import com.google.android.material.slider.RangeSlider
 import com.google.android.material.slider.RangeSlider.OnSliderTouchListener
 import kotlin.math.roundToLong
@@ -22,18 +28,42 @@ class SearchingFragment : Fragment() {
 
     private lateinit var adapter: RentPreviewAdapter
 
+    private val navigator: AliceNavigator by lazy {
+        AliceNavigator(parentFragmentManager)
+    }
+
     private var filteredRegion: String = ""
     private var filteredCity: String = ""
     private var filteredQuarter: String = ""
-    private var filteredMinPrice: Long = 0
-    private var filteredMaxPrice: Long = Long.MAX_VALUE / 1000000
+    private val priceList = (0..100).map { 200000L + (it * 50000L) }
+
+    private var filteredMinPrice: Long = priceList[0]
+    private var filteredMinPriceIndex: Int = -1
+    private var filteredMaxPrice: Long = priceList[priceList.size - 1]
+    private var filteredMaxPriceIndex: Int = -1
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setUpSpinners()
         setUpListeners()
         setUpAdapter()
         refreshFilterList()
+    }
+
+    private fun setUpSpinners() {
+        val adapter = ArrayAdapter(
+            requireContext(),
+            R.layout.simple_spinner_item,
+            priceList.map { it.asCommaSeparated }
+        )
+        adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
+        binding.spinnerMaxPrice.adapter = adapter
+        binding.spinnerMinPrice.adapter = adapter
+
+        // Set default selections
+        binding.spinnerMinPrice.setSelection(0)
+        binding.spinnerMaxPrice.setSelection(priceList.size - 1)
     }
 
     private fun setUpAdapter() {
@@ -65,7 +95,7 @@ class SearchingFragment : Fragment() {
         }
 
         filteredItems = filteredItems.filter {
-            it.price in ((filteredMinPrice * 100000)..(filteredMaxPrice * 100000))
+            it.price in (filteredMinPrice..filteredMaxPrice)
         }
 
         val filteredTypes = createTypeList()
@@ -80,6 +110,9 @@ class SearchingFragment : Fragment() {
     }
 
     private fun setUpListeners() {
+        binding.btnBack.setOnClickListener {
+            navigator.popBackStack()
+        }
         binding.btnOpenFilter.setOnClickListener {
             binding.llFilter.isVisible = true
             binding.btnOpenFilter.isVisible = false
@@ -108,20 +141,53 @@ class SearchingFragment : Fragment() {
                 refreshFilterList()
             }
         }
-        binding.sliderPrice.addOnSliderTouchListener(object : OnSliderTouchListener {
-            override fun onStartTrackingTouch(slider: RangeSlider) {}
-
-            override fun onStopTrackingTouch(slider: RangeSlider) {
-                val values = slider.values
-                if (values.size < 2) {
-                    return
+        binding.spinnerMinPrice.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    val selectedPrice = priceList[position]
+                    if (selectedPrice > filteredMaxPrice) {
+                        val index = filteredMinPriceIndex.takeIf { it > -1 } ?: 0
+                        binding.spinnerMinPrice.setSelection(index)
+                        showToast("Minimum price cannot be greater than maximum price")
+                    } else {
+                        filteredMinPriceIndex = position
+                        filteredMinPrice = selectedPrice
+                        binding.tvPriceRange.text = "${filteredMinPrice.asCommaSeparated} - ${filteredMaxPrice.asCommaSeparated}"
+                        refreshFilterList()
+                    }
                 }
-                filteredMinPrice = values[0].roundToLong()
-                filteredMaxPrice = values[1].roundToLong()
-                binding.tvPriceRange.text = "$filteredMinPrice Lakh - $filteredMaxPrice Lakh"
-                refreshFilterList()
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
-        })
+
+        binding.spinnerMaxPrice.onItemSelectedListener =
+            object : AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(
+                    parent: AdapterView<*>?,
+                    view: View?,
+                    position: Int,
+                    id: Long
+                ) {
+                    val selectedPrice = priceList[position]
+                    if (selectedPrice < filteredMinPrice) {
+                        val index = filteredMaxPriceIndex.takeIf { it > -1 } ?: (priceList.size - 1)
+                        binding.spinnerMaxPrice.setSelection(index)
+                        showToast("Maximum price cannot be less than minimum price")
+                    } else {
+                        filteredMaxPriceIndex = position
+                        filteredMaxPrice = selectedPrice
+                        binding.tvPriceRange.text = "$filteredMinPrice Lakh - $filteredMaxPrice Lakh"
+                        refreshFilterList()
+                    }
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {}
+            }
         binding.cbCondo.setOnCheckedChangeListener { _, isChecked ->
             refreshFilterList()
         }
