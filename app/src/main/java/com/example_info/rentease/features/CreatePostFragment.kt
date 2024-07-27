@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.example_info.rentease.database.dao.PropertyDao
 import com.example_info.rentease.database.dao.UserDao
+import com.example_info.rentease.database.mapper.toDomain
 import com.example_info.rentease.database.mapper.toEntity
 import com.example_info.rentease.databinding.FragmentCreatePostBinding
 import com.example_info.rentease.di.AliceInitializer
@@ -25,6 +26,9 @@ import com.example_info.rentease.util.helper.showToast
 import kotlinx.coroutines.launch
 
 class CreatePostFragment : Fragment() {
+
+    private val postIdToUpdate: Long?
+        get() = arguments?.getLong(KEY_ID)
 
     private val navigator: AliceNavigator by lazy {
         AliceNavigator(parentFragmentManager)
@@ -44,6 +48,7 @@ class CreatePostFragment : Fragment() {
     private val cityList = getCityList()
     private val regionList = getRegionList()
     private val propertyTypePairList = getSampleTabTypes()
+    private var oldDetailItem: RentDetailItem? = null
     private var createdDetailItem: RentDetailItem? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -53,7 +58,36 @@ class CreatePostFragment : Fragment() {
         setUpTypeSpinner()
         setUpCitySpinner()
         setUpRegionSpinner()
+        loadToUpdate()
         setUpListeners()
+    }
+
+    private fun loadToUpdate() {
+        if (postIdToUpdate == null) return
+
+        lifecycleScope.launch {
+            propertyDao
+                .getById(postIdToUpdate!!)
+                ?.toDomain(preferences.currentUserId.toString())
+                ?.let { item ->
+                    oldDetailItem = item
+                    binding.editTextQuarter.setText(item.quarter)
+                    binding.editTextPrice.setText(item.price.toString())
+                    binding.editTextFacilityList.setText(item.facilityList.joinToString(", "))
+                    binding.editTextDescription.setText(item.description)
+                    binding.editTextContactPhone.setText(item.contactPhone)
+
+                    val cityIndex = cityList.indexOf(item.city).takeIf { it > -1 } ?: 0
+                    binding.spinnerCity.setSelection(cityIndex)
+
+                    val regionIndex = regionList.indexOf(item.region).takeIf { it > -1 } ?: 0
+                    binding.spinnerRegion.setSelection(regionIndex)
+
+                    val typeIndex = propertyTypePairList.indexOfFirst { it.first == item.type }
+                        .takeIf { it > -1 } ?: 0
+                    binding.spinnerType.setSelection(typeIndex)
+                }
+        }
     }
 
     private fun prepareUserInfo() {
@@ -144,7 +178,18 @@ class CreatePostFragment : Fragment() {
         }
 
         if (isValid) {
-            createdDetailItem = RentDetailItem(
+            createdDetailItem = oldDetailItem?.copy(
+                region = region,
+                quarter = quarter,
+                city = city,
+                type = propertyTypePairList[typeIndex].first,
+                price = price.toLong(),
+                creatorName = userFullName,
+                creatorId = preferences.currentUserId.toString(),
+                description = description,
+                facilityList = facilities.split(",").map { it.trim() },
+                contactPhone = contactPhone,
+            ) ?: RentDetailItem(
                 id = 0,
                 previewImage = "",
                 region = region,
@@ -162,9 +207,8 @@ class CreatePostFragment : Fragment() {
                 totalRating = 0,
                 ratingList = emptyList(),
                 interestedList = emptyList(),
-            ).also {
-                createPost(it)
-            }
+            )
+            createPost(createdDetailItem!!)
         }
     }
 
@@ -176,7 +220,9 @@ class CreatePostFragment : Fragment() {
         )
         adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
         binding.spinnerType.adapter = adapter
-        binding.spinnerType.setSelection(0)
+        if (binding.spinnerType.selectedItemPosition < 0) {
+            binding.spinnerType.setSelection(0)
+        }
     }
 
     private fun setUpCitySpinner() {
@@ -187,7 +233,9 @@ class CreatePostFragment : Fragment() {
         )
         adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
         binding.spinnerCity.adapter = adapter
-        binding.spinnerCity.setSelection(0)
+        if (binding.spinnerCity.selectedItemPosition < 0) {
+            binding.spinnerCity.setSelection(0)
+        }
     }
 
     private fun setUpRegionSpinner() {
@@ -198,7 +246,9 @@ class CreatePostFragment : Fragment() {
         )
         adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
         binding.spinnerRegion.adapter = adapter
-        binding.spinnerRegion.setSelection(0)
+        if (binding.spinnerRegion.selectedItemPosition < 0) {
+            binding.spinnerRegion.setSelection(0)
+        }
     }
 
     override fun onCreateView(
@@ -209,6 +259,17 @@ class CreatePostFragment : Fragment() {
         return FragmentCreatePostBinding.inflate(
             inflater, container, false
         ).also { binding = it }.root
+    }
+
+    companion object {
+        private const val KEY_ID = "key-post-id"
+        fun instanceForUpdate(postId: Long): CreatePostFragment {
+            return CreatePostFragment().apply {
+                arguments = Bundle().apply {
+                    putLong(KEY_ID, postId)
+                }
+            }
+        }
     }
 
 }

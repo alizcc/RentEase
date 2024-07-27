@@ -29,6 +29,7 @@ import com.example_info.rentease.navigation.AliceNavigator
 import com.example_info.rentease.preferences.MainPreferences
 import com.example_info.rentease.util.helper.asCommaSeparated
 import com.example_info.rentease.util.helper.roundToDecimalPlace
+import com.example_info.rentease.util.helper.showConfirmationDialog
 import com.example_info.rentease.util.helper.showToast
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -92,7 +93,27 @@ class DetailFragment : Fragment() {
         }
     }
 
+    private fun deleteItem() {
+        showConfirmationDialog(
+            title = "DELETE THIS POST",
+            message = "Are you sure want to delete this rental post PERMANENTLY?",
+            onCancelled = {},
+        ) {
+            lifecycleScope.launch {
+                propertyDao.deleteById(postId)
+                showToast("Successfully deleted!")
+                navigator.popBackStack()
+            }
+        }
+    }
+
     private fun setUpListeners() {
+        binding.btnDelete.setOnClickListener {
+            deleteItem()
+        }
+        binding.btnEdit.setOnClickListener {
+            navigator.navigate(CreatePostFragment.instanceForUpdate(postId))
+        }
         binding.btnBack.setOnClickListener {
             navigator.popBackStack()
         }
@@ -166,6 +187,12 @@ class DetailFragment : Fragment() {
                     if (details == null) {
                         return@collectLatest
                     }
+                    // checking self profile editable
+                    val isMySelf = details.creatorId == userId
+                    binding.btnEdit.isVisible = isMySelf
+                    binding.btnDelete.isVisible = isMySelf
+                    binding.btnInterest.isVisible = !isMySelf
+
                     if (details.facilityList.isNotEmpty()) {
                         facilityAdapter.submitList(details.facilityList)
                     }

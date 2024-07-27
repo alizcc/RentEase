@@ -1,10 +1,9 @@
 package com.example_info.rentease.mock
 
-import com.example_info.rentease.model.RentDetailItem
 import com.example_info.rentease.model.RentPreviewItem
 
 fun getSampleTabTypes(size: Int? = null) =
-    sampleRentTypes.subList(0, size ?: (sampleRentTypes.size - 1))
+    sampleRentTypes.subList(0, size ?: sampleRentTypes.size)
 
 fun getSampleRentPreviewItems(size: Int? = null, type: String? = null) =
     if (size == null) {
