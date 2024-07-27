@@ -19,10 +19,12 @@ import com.example_info.rentease.R
 import com.example_info.rentease.adapter.RentFacilityAdapter
 import com.example_info.rentease.adapter.RentImageSliderAdapter
 import com.example_info.rentease.databinding.FragmentDetailBinding
+import com.example_info.rentease.di.AliceInitializer
 import com.example_info.rentease.mock.getSampleTabTypes
 import com.example_info.rentease.mock.sampleRentDetailItem
 import com.example_info.rentease.model.RentDetailItem
 import com.example_info.rentease.navigation.AliceNavigator
+import com.example_info.rentease.preferences.MainPreferences
 import com.example_info.rentease.util.helper.asCommaSeparated
 import com.example_info.rentease.util.helper.roundToDecimalPlace
 import com.example_info.rentease.util.helper.showToast
@@ -43,6 +45,13 @@ class DetailFragment : Fragment() {
 
     private val _detailState = MutableStateFlow<RentDetailItem?>(null)
     private val detailState = _detailState.asStateFlow()
+
+    private val preferences: MainPreferences by lazy {
+        AliceInitializer.getMainPreferences(requireContext())
+    }
+
+    private val userId: String
+        get() = preferences.currentUserId.toString()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -112,17 +121,21 @@ class DetailFragment : Fragment() {
         _detailState.update {
             it?.copy(
                 hasRated = true,
-                totalRatingCount = it.totalRatingCount + 1,
-                totalRating = it.totalRating + rating
+                totalRating = it.totalRating + rating,
+                ratingList = it.ratingList + userId
             )
         }
     }
 
     private fun toggleInterest() {
-        _detailState.update {
-            it?.copy(
-                interestedCount = if (it.hasInterested) it.interestedCount - 1 else it.interestedCount + 1,
-                hasInterested = !it.hasInterested,
+        _detailState.update { item ->
+            item?.copy(
+                hasInterested = !item.hasInterested,
+                interestedList = if (item.interestedList.contains(userId)) {
+                    item.interestedList.filter { it != userId }
+                } else {
+                    item.interestedList + userId
+                }
             )
         }
     }
@@ -149,8 +162,9 @@ class DetailFragment : Fragment() {
                     binding.tvLocation.text =
                         "${details.quarter}၊ ${details.region}၊ ${details.city}"
 
-                    val avgRating = (details.totalRating.toDouble() / details.totalRatingCount.toDouble())
-                        .roundToDecimalPlace(2)
+                    val avgRating =
+                        (details.totalRating.toDouble() / details.totalRatingCount.toDouble())
+                            .roundToDecimalPlace(2)
 
                     binding.tvInterestRating.text = getString(
                         R.string.msg_rating_and_interest,
