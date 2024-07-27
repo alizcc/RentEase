@@ -18,10 +18,11 @@ import androidx.viewpager2.widget.ViewPager2
 import com.example_info.rentease.R
 import com.example_info.rentease.adapter.RentFacilityAdapter
 import com.example_info.rentease.adapter.RentImageSliderAdapter
+import com.example_info.rentease.database.dao.PropertyDao
+import com.example_info.rentease.database.mapper.toDomain
 import com.example_info.rentease.databinding.FragmentDetailBinding
 import com.example_info.rentease.di.AliceInitializer
 import com.example_info.rentease.mock.getSampleTabTypes
-import com.example_info.rentease.mock.sampleRentDetailItem
 import com.example_info.rentease.model.RentDetailItem
 import com.example_info.rentease.navigation.AliceNavigator
 import com.example_info.rentease.preferences.MainPreferences
@@ -36,8 +37,15 @@ import kotlinx.coroutines.launch
 
 class DetailFragment : Fragment() {
 
+    private val postId: Long
+        get() = arguments?.getLong(KEY_ID) ?: throw IllegalArgumentException("Need to pass post ID")
+
     private val navigator: AliceNavigator by lazy {
         AliceNavigator(parentFragmentManager)
+    }
+
+    private val propertyDao: PropertyDao by lazy {
+        AliceInitializer.getDatabase(requireContext()).propertyDao()
     }
     private lateinit var binding: FragmentDetailBinding
     private var imageSliderAdapter: RentImageSliderAdapter? = null
@@ -64,8 +72,10 @@ class DetailFragment : Fragment() {
     }
 
     private fun fetchDetails() {
-        _detailState.update {
-            sampleRentDetailItem
+        lifecycleScope.launch {
+            propertyDao.getById(postId)?.toDomain()?.let { detail ->
+                _detailState.update { detail }
+            }?: showToast("No such rental post")
         }
     }
 
@@ -152,6 +162,8 @@ class DetailFragment : Fragment() {
                     }
                     if (details.images.isNotEmpty()) {
                         setUpImageSlider(details.images)
+                    } else {
+                        setUpImageSlider(listOf(""))
                     }
                     binding.tvDescription.text = details.description
                     binding.tvName.text = getSampleTabTypes().find {
@@ -228,6 +240,17 @@ class DetailFragment : Fragment() {
         return FragmentDetailBinding.inflate(
             inflater, container, false
         ).also { binding = it }.root
+    }
+
+    companion object {
+        private const val KEY_ID = "key-post-id"
+        fun instance(postId: Long): DetailFragment {
+            return DetailFragment().apply {
+                arguments = Bundle().apply {
+                    putLong(KEY_ID, postId)
+                }
+            }
+        }
     }
 
 }

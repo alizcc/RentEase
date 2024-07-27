@@ -115,7 +115,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun onClickItem(item: RentPreviewItem) {
-        navigator.navigate(DetailFragment())
+        navigator.navigate(DetailFragment.instance(item.id))
     }
 
     private fun reloadItems(type: String? = null) {

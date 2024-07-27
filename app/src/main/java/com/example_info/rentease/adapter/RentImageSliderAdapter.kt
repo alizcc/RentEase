@@ -2,6 +2,7 @@ package com.example_info.rentease.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example_info.rentease.databinding.SingleImageSliderBinding
@@ -35,10 +36,16 @@ class RentImageSliderAdapter(
     ) {
 
         fun bind(item: String) {
-            Glide
-                .with(binding.root.context)
-                .load(item)
-                .into(binding.ivPoster)
+            val showImage = item.isNotBlank()
+            binding.tvNoImage.isVisible = !showImage
+            binding.ivNoImage.isVisible = !showImage
+            binding.ivPoster.isVisible = showImage
+            if (showImage) {
+                Glide
+                    .with(binding.root.context)
+                    .load(item)
+                    .into(binding.ivPoster)
+            }
         }
 
     }
