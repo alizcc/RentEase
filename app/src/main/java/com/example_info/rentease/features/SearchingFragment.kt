@@ -18,9 +18,6 @@ import com.example_info.rentease.mock.getSampleRentPreviewItems
 import com.example_info.rentease.navigation.AliceNavigator
 import com.example_info.rentease.util.helper.asCommaSeparated
 import com.example_info.rentease.util.helper.showToast
-import com.google.android.material.slider.RangeSlider
-import com.google.android.material.slider.RangeSlider.OnSliderTouchListener
-import kotlin.math.roundToLong
 
 class SearchingFragment : Fragment() {
 
@@ -35,7 +32,7 @@ class SearchingFragment : Fragment() {
     private var filteredRegion: String = ""
     private var filteredCity: String = ""
     private var filteredQuarter: String = ""
-    private val priceList = (0..100).map { 200000L + (it * 50000L) }
+    private val priceList = (0..120).map { 50000L + (it * 50000L) }
 
     private var filteredMinPrice: Long = priceList[0]
     private var filteredMinPriceIndex: Int = -1
@@ -75,7 +72,7 @@ class SearchingFragment : Fragment() {
     }
 
     private fun refreshFilterList() {
-        var filteredItems = getSampleRentPreviewItems(20)
+        var filteredItems = getSampleRentPreviewItems()
         if (filteredRegion.isNotBlank()) {
             filteredItems = filteredItems.filter {
                 it.region.contains(filteredRegion, true)
@@ -157,7 +154,8 @@ class SearchingFragment : Fragment() {
                     } else {
                         filteredMinPriceIndex = position
                         filteredMinPrice = selectedPrice
-                        binding.tvPriceRange.text = "${filteredMinPrice.asCommaSeparated} - ${filteredMaxPrice.asCommaSeparated}"
+                        binding.tvPriceRange.text =
+                            "${filteredMinPrice.asCommaSeparated} - ${filteredMaxPrice.asCommaSeparated}"
                         refreshFilterList()
                     }
                 }
@@ -181,29 +179,30 @@ class SearchingFragment : Fragment() {
                     } else {
                         filteredMaxPriceIndex = position
                         filteredMaxPrice = selectedPrice
-                        binding.tvPriceRange.text = "$filteredMinPrice Lakh - $filteredMaxPrice Lakh"
+                        binding.tvPriceRange.text =
+                            "$filteredMinPrice Lakh - $filteredMaxPrice Lakh"
                         refreshFilterList()
                     }
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
-        binding.cbCondo.setOnCheckedChangeListener { _, isChecked ->
+        binding.cbCondo.setOnCheckedChangeListener { _, _ ->
             refreshFilterList()
         }
-        binding.cbHouse.setOnCheckedChangeListener { _, isChecked ->
+        binding.cbField.setOnCheckedChangeListener { _, _ ->
             refreshFilterList()
         }
-        binding.cbStudio.setOnCheckedChangeListener { _, isChecked ->
+        binding.cbHostel.setOnCheckedChangeListener { _, _ ->
             refreshFilterList()
         }
-        binding.cbBungalow.setOnCheckedChangeListener { _, isChecked ->
+        binding.cbBungalow.setOnCheckedChangeListener { _, _ ->
             refreshFilterList()
         }
-        binding.cbApartment.setOnCheckedChangeListener { _, isChecked ->
+        binding.cbApartment.setOnCheckedChangeListener { _, _ ->
             refreshFilterList()
         }
-        binding.cbTownHouse.setOnCheckedChangeListener { _, isChecked ->
+        binding.cbMiniCondo.setOnCheckedChangeListener { _, _ ->
             refreshFilterList()
         }
     }
@@ -215,11 +214,11 @@ class SearchingFragment : Fragment() {
             if (binding.cbCondo.isChecked) {
                 add("condo")
             }
-            if (binding.cbHouse.isChecked) {
-                add("house")
+            if (binding.cbMiniCondo.isChecked) {
+                add("minicondo")
             }
-            if (binding.cbStudio.isChecked) {
-                add("studio")
+            if (binding.cbField.isChecked) {
+                add("field")
             }
             if (binding.cbBungalow.isChecked) {
                 add("bungalow")
@@ -227,8 +226,8 @@ class SearchingFragment : Fragment() {
             if (binding.cbApartment.isChecked) {
                 add("apartment")
             }
-            if (binding.cbTownHouse.isChecked) {
-                add("townhouse")
+            if (binding.cbHostel.isChecked) {
+                add("hostel")
             }
         }
         return filteredTypes

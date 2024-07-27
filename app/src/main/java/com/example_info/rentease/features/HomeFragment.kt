@@ -106,7 +106,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun onClickItem(item: RentPreviewItem) {
-        Toast.makeText(requireContext(), item.city, Toast.LENGTH_SHORT).show()
+        navigator.navigate(DetailFragment())
     }
 
     private fun reloadItems(type: String? = null) {

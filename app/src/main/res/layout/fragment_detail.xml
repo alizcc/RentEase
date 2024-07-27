@@ -13,7 +13,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:animateLayoutChanges="true">
 
             <ImageButton
                 android:id="@+id/btnBack"
@@ -41,7 +42,7 @@
                 app:layout_constraintTop_toTopOf="@id/btnBack" />
 
             <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/pagerAutoSlides"
+                android:id="@+id/pagerImageSlides"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:layout_marginTop="16dp"
@@ -59,10 +60,11 @@
                 android:textAlignment="textStart"
                 android:textSize="16sp"
                 android:textStyle="bold"
+                android:layout_marginTop="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/pagerAutoSlides"
+                app:layout_constraintTop_toBottomOf="@id/pagerImageSlides"
                 tools:text="Modern Home" />
 
             <TextView
@@ -78,6 +80,20 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvName"
                 tools:text="California, USA" />
+
+            <TextView
+                android:id="@+id/tvInterestRating"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="4dp"
+                android:maxLines="1"
+                android:textAlignment="textStart"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvLocation"
+                tools:text="@string/msg_rating_and_interest" />
 
             <TextView
                 android:id="@+id/tvPriceLabel"
@@ -114,8 +130,57 @@
                 android:orientation="horizontal"
                 android:paddingHorizontal="16dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintTop_toBottomOf="@id/tvLocation"
+                app:layout_constraintTop_toBottomOf="@id/tvInterestRating"
                 tools:listitem="@layout/single_facility" />
+
+            <LinearLayout
+                android:id="@+id/llContact"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="8dp"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@id/rcyFacilities">
+
+                <TextView
+                    android:id="@+id/tvContactLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:maxLines="1"
+                    android:text="Contact info:"
+                    android:textAlignment="textStart"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp">
+
+                    <TextView
+                        android:id="@+id/tvOwner"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:maxLines="1"
+                        android:textAlignment="textStart"
+                        android:textSize="15sp"
+                        tools:text="Owner: Mr Monkey" />
+
+                    <TextView
+                        android:id="@+id/tvOwnerPhone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:maxLines="1"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/primary_color"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        tools:text="091234567" />
+
+                </LinearLayout>
+
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/tvDescriptionLabel"
@@ -124,14 +189,14 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="10dp"
                 android:maxLines="1"
+                android:text="Description"
                 android:textAlignment="textStart"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/rcyFacilities"
-                tools:text="Modern Home" />
+                app:layout_constraintTop_toBottomOf="@id/llContact" />
 
             <TextView
                 android:id="@+id/tvDescription"
@@ -144,18 +209,40 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvDescriptionLabel"
-                tools:text="California, USA" />
+                tools:text="@tools:sample/lorem/random" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
 
-    <Button
-        android:id="@+id/btnBook"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="16dp"
         android:layout_marginBottom="16dp"
-        android:text="Book now" />
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnRate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:drawableLeft="@drawable/ic_star_white_outline"
+            android:drawablePadding="8dp"
+            android:gravity="center_vertical"
+            android:text="Rate"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btnInterest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/ic_fav_white_outline"
+            android:drawablePadding="8dp"
+            android:gravity="center_vertical"
+            android:text="Interest" />
+
+    </LinearLayout>
 
 </LinearLayout>
