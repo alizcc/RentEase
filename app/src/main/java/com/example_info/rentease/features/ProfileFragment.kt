@@ -9,25 +9,21 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
+import com.example_info.rentease.R
 import com.example_info.rentease.adapter.RentPreviewAdapter
-import com.example_info.rentease.adapter.RentPreviewAutoSliderAdapter
 import com.example_info.rentease.database.dao.PropertyDao
 import com.example_info.rentease.database.dao.UserDao
+import com.example_info.rentease.database.entity.PropertyEntity
 import com.example_info.rentease.database.mapper.toPreview
-import com.example_info.rentease.databinding.FragmentHomeBinding
+import com.example_info.rentease.databinding.FragmentProfileBinding
 import com.example_info.rentease.di.AliceInitializer
-import com.example_info.rentease.mock.getSampleRentPreviewItems
-import com.example_info.rentease.mock.getSampleTabTypes
 import com.example_info.rentease.model.RentPreviewItem
 import com.example_info.rentease.navigation.AliceNavigator
 import com.example_info.rentease.preferences.MainPreferences
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import kotlinx.coroutines.launch
 
-class HomeFragment : Fragment() {
+class ProfileFragment : Fragment() {
 
     private val preferences: MainPreferences by lazy {
         AliceInitializer.getMainPreferences(requireContext())
@@ -42,10 +38,9 @@ class HomeFragment : Fragment() {
     private val navigator: AliceNavigator by lazy {
         AliceNavigator(parentFragmentManager)
     }
-    private lateinit var binding: FragmentHomeBinding
-    private var sliderAdapter: RentPreviewAutoSliderAdapter? = null
+    private lateinit var binding: FragmentProfileBinding
     private lateinit var itemAdapter: RentPreviewAdapter
-    private val propertyTypes = getSampleTabTypes()
+    private var selectedType: NavType = NavType.MyPosts
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -53,24 +48,33 @@ class HomeFragment : Fragment() {
         setUpListeners()
         loadUserInfo()
         setUpItemsAdapter()
-        loadSliderItems()
-        loadTabItems()
 
         reloadItems()
     }
 
     private fun setUpListeners() {
-        binding.edtSearch.setOnClickListener {
-            navigator.navigate(SearchingFragment())
+        binding.btnEdit.setOnClickListener {
+            // navigator.navigate(SearchingFragment())
         }
-        binding.btnAdd.setOnClickListener {
-            navigator.navigate(CreatePostFragment())
+        binding.btnBack.setOnClickListener {
+            navigator.popBackStack()
         }
-        binding.civProfile.setOnClickListener {
-            navigator.navigate(ProfileFragment())
-        }
-        binding.tvTitle.setOnClickListener {
-            navigator.navigate(ProfileFragment())
+        binding.bottomNavigation.setOnItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.nav_my_posts -> {
+                    selectedType = NavType.MyPosts
+                    reloadItems()
+                    true
+                }
+
+                R.id.nav_saved_posts -> {
+                    selectedType = NavType.InterestedPosts
+                    reloadItems()
+                    true
+                }
+
+                else -> false
+            }
         }
     }
 
@@ -89,29 +93,6 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun loadTabItems() {
-        val types = propertyTypes
-        types.forEach { type ->
-            val tab = binding.tlTypes.newTab()
-            tab.text = type.second
-            tab.tag = type.first
-            binding.tlTypes.addTab(tab)
-        }
-        binding.tlTypes.addOnTabSelectedListener(object : OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                tab?.let {
-                    val selectedType = it.tag.toString()
-                    reloadItems(selectedType)
-                }
-            }
-
-            override fun onTabUnselected(p0: TabLayout.Tab?) {}
-
-            override fun onTabReselected(p0: TabLayout.Tab?) {}
-
-        })
-    }
-
     private fun setUpItemsAdapter() {
         itemAdapter = RentPreviewAdapter(::onClickItem)
         binding.rcyItems.adapter = itemAdapter
@@ -124,25 +105,23 @@ class HomeFragment : Fragment() {
         navigator.navigate(DetailFragment.instance(item.id))
     }
 
-    private fun reloadItems(type: String? = null) {
-        val selectedType = type ?: propertyTypes[binding.tlTypes.selectedTabPosition].first
+    private fun filterInterestedPosts(entity: PropertyEntity): Boolean {
+        return entity.interestedList.contains(preferences.currentUserId.toString())
+    }
+
+    private fun reloadItems() {
+        val myPost = selectedType == NavType.MyPosts
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.RESUMED) {
-                val items = propertyDao.getAllByType(selectedType)
+                val items = if (myPost) {
+                    propertyDao.getAllByUserId(preferences.currentUserId.toString())
+                } else {
+                    propertyDao.getAll().filter(::filterInterestedPosts)
+                }
                 itemAdapter.submitList(items.map { it.toPreview() })
             }
         }
-    }
-
-    private fun loadSliderItems() {
-        val items = getSampleRentPreviewItems(5)
-        sliderAdapter = RentPreviewAutoSliderAdapter(
-            items = items,
-            onClick = ::onClickItem
-        )
-        binding.pagerAutoSlides.adapter = sliderAdapter
-        binding.pagerAutoSlides.orientation = ViewPager2.ORIENTATION_HORIZONTAL
     }
 
     override fun onCreateView(
@@ -150,9 +129,13 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return FragmentHomeBinding.inflate(
+        return FragmentProfileBinding.inflate(
             inflater, container, false
         ).also { binding = it }.root
+    }
+
+    enum class NavType {
+        MyPosts, InterestedPosts;
     }
 
 }

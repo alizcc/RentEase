@@ -28,6 +28,9 @@ interface PropertyDao {
     @Query("SELECT * FROM property_entity")
     fun getAll(): List<PropertyEntity>
 
+    @Query("SELECT * FROM property_entity WHERE creatorId = :userId")
+    fun getAllByUserId(userId: String): List<PropertyEntity>
+
     @Query("SELECT * FROM property_entity WHERE type = :type")
     fun getAllByType(type: String): List<PropertyEntity>
 }
