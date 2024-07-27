@@ -11,13 +11,18 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example_info.rentease.adapter.RentPreviewAdapter
+import com.example_info.rentease.database.dao.PropertyDao
+import com.example_info.rentease.database.mapper.toPreview
 import com.example_info.rentease.databinding.FragmentSearchingBinding
-import com.example_info.rentease.mock.getSampleRentPreviewItems
+import com.example_info.rentease.di.AliceInitializer
+import com.example_info.rentease.model.RentPreviewItem
 import com.example_info.rentease.navigation.AliceNavigator
 import com.example_info.rentease.util.helper.asCommaSeparated
 import com.example_info.rentease.util.helper.showToast
+import kotlinx.coroutines.launch
 
 class SearchingFragment : Fragment() {
 
@@ -27,6 +32,10 @@ class SearchingFragment : Fragment() {
 
     private val navigator: AliceNavigator by lazy {
         AliceNavigator(parentFragmentManager)
+    }
+
+    private val propertyDao: PropertyDao by lazy {
+        AliceInitializer.getDatabase(requireContext()).propertyDao()
     }
 
     private var filteredRegion: String = ""
@@ -39,13 +48,23 @@ class SearchingFragment : Fragment() {
     private var filteredMaxPrice: Long = priceList[priceList.size - 1]
     private var filteredMaxPriceIndex: Int = -1
 
+    private var previewItemList: List<RentPreviewItem> = emptyList()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setUpSpinners()
         setUpListeners()
         setUpAdapter()
-        refreshFilterList()
+        loadPreviewItems()
+    }
+
+    private fun loadPreviewItems() {
+        lifecycleScope.launch {
+            val items = propertyDao.getAll()
+            previewItemList = items.map { it.toPreview() }
+            refreshFilterList()
+        }
     }
 
     private fun setUpSpinners() {
@@ -72,7 +91,7 @@ class SearchingFragment : Fragment() {
     }
 
     private fun refreshFilterList() {
-        var filteredItems = getSampleRentPreviewItems()
+        var filteredItems = previewItemList
         if (filteredRegion.isNotBlank()) {
             filteredItems = filteredItems.filter {
                 it.region.contains(filteredRegion, true)

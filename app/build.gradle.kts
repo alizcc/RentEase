@@ -62,4 +62,6 @@ dependencies {
     implementation("de.hdodenhof:circleimageview:3.1.0")
     // network image
     implementation("com.github.bumptech.glide:glide:4.13.0")
+    // gson for converters
+    implementation("com.google.code.gson:gson:2.11.0")
 }

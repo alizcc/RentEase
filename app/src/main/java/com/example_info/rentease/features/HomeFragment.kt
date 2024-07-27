@@ -4,15 +4,18 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager2.widget.ViewPager2
 import com.bumptech.glide.Glide
 import com.example_info.rentease.adapter.RentPreviewAdapter
 import com.example_info.rentease.adapter.RentPreviewAutoSliderAdapter
+import com.example_info.rentease.database.dao.PropertyDao
 import com.example_info.rentease.database.dao.UserDao
+import com.example_info.rentease.database.mapper.toPreview
 import com.example_info.rentease.databinding.FragmentHomeBinding
 import com.example_info.rentease.di.AliceInitializer
 import com.example_info.rentease.mock.getSampleRentPreviewItems
@@ -26,12 +29,14 @@ import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment() {
 
-
     private val preferences: MainPreferences by lazy {
         AliceInitializer.getMainPreferences(requireContext())
     }
     private val userDao: UserDao by lazy {
         AliceInitializer.getDatabase(requireContext()).userDao()
+    }
+    private val propertyDao: PropertyDao by lazy {
+        AliceInitializer.getDatabase(requireContext()).propertyDao()
     }
 
     private val navigator: AliceNavigator by lazy {
@@ -40,6 +45,7 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private var sliderAdapter: RentPreviewAutoSliderAdapter? = null
     private lateinit var itemAdapter: RentPreviewAdapter
+    private val propertyTypes = getSampleTabTypes()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -56,6 +62,9 @@ class HomeFragment : Fragment() {
     private fun setUpListeners() {
         binding.edtSearch.setOnClickListener {
             navigator.navigate(SearchingFragment())
+        }
+        binding.btnAdd.setOnClickListener {
+            navigator.navigate(CreatePostFragment())
         }
     }
 
@@ -75,7 +84,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun loadTabItems() {
-        val types = getSampleTabTypes(5)
+        val types = propertyTypes
         types.forEach { type ->
             val tab = binding.tlTypes.newTab()
             tab.text = type.second
@@ -110,7 +119,14 @@ class HomeFragment : Fragment() {
     }
 
     private fun reloadItems(type: String? = null) {
-        itemAdapter.submitList(getSampleRentPreviewItems(15, type))
+        val selectedType = type ?: propertyTypes[binding.tlTypes.selectedTabPosition].first
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                val items = propertyDao.getAllByType(selectedType)
+                itemAdapter.submitList(items.map { it.toPreview() })
+            }
+        }
     }
 
     private fun loadSliderItems() {

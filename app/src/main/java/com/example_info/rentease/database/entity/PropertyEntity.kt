@@ -1,7 +1,12 @@
-package com.example_info.rentease.model
+package com.example_info.rentease.database.entity
 
-data class RentDetailItem(
-    val id: Long,
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "property_entity")
+data class PropertyEntity(
+    @PrimaryKey(autoGenerate = true)
+    val id: Long = 0,
     val previewImage: String,
     val region: String,
     val quarter: String,
@@ -19,13 +24,5 @@ data class RentDetailItem(
     val contactPhone: String,
     val ratingList: List<String>,
     val interestedList: List<String>,
-    // personal fields
-    val hasInterested: Boolean = false,
-    val hasRated: Boolean = false,
 ) {
-    val totalRatingCount: Int
-        get() = ratingList.size
-
-    val interestedCount: Int
-        get() = interestedList.size
 }

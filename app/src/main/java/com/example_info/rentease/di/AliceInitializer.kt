@@ -3,6 +3,7 @@ package com.example_info.rentease.di
 import android.content.Context
 import androidx.room.Room
 import com.example_info.rentease.database.RentEaseDB
+import com.example_info.rentease.database.callback.PropertyDatabaseCallback
 import com.example_info.rentease.preferences.MainPreferences
 import com.example_info.rentease.util.constants.AppConstants
 
@@ -29,6 +30,8 @@ object AliceInitializer {
         _database?.let { return it }
         _database = Room.databaseBuilder(context, RentEaseDB::class.java, AppConstants.DB_NAME)
             .allowMainThreadQueries()
+            .addCallback(PropertyDatabaseCallback(context))
+            .fallbackToDestructiveMigration()
             .build()
         return _database!!
     }

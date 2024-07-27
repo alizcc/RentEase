@@ -2,11 +2,13 @@ package com.example_info.rentease.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example_info.rentease.databinding.SingleRentPreviewItemBinding
 import com.example_info.rentease.model.RentPreviewItem
+import com.example_info.rentease.util.helper.asCommaSeparated
 
 class RentPreviewAdapter(
     private val onClick: (RentPreviewItem) -> Unit,
@@ -34,22 +36,20 @@ class RentPreviewAdapter(
         binding.root
     ) {
 
-        private fun getReadablePrice(price: Long): String {
-            return if (price > 1000) {
-                "$price"
-            } else {
-                "${price / 1000} K"
-            }
-        }
-
         fun bind(item: RentPreviewItem) {
-            Glide
-                .with(binding.root.context)
-                .load(item.previewImage)
-                .into(binding.ivPoster)
+            val showImage = item.previewImage.isNotBlank()
+            binding.tvNoImage.isVisible = !showImage
+            binding.ivNoImage.isVisible = !showImage
+            binding.ivPoster.isVisible = showImage
+            if (showImage) {
+                Glide
+                    .with(binding.root.context)
+                    .load(item.previewImage)
+                    .into(binding.ivPoster)
+            }
             binding.tvTitle.text = "${item.quarter}၊ ${item.region}"
             binding.tvDescription.text = item.city
-            binding.tvPrice.text = getReadablePrice(item.price)
+            binding.tvPrice.text = item.price.asCommaSeparated
             binding.root.setOnClickListener {
                 onClick(item)
             }
