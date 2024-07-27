@@ -20,6 +20,7 @@ import com.example_info.rentease.adapter.RentFacilityAdapter
 import com.example_info.rentease.adapter.RentImageSliderAdapter
 import com.example_info.rentease.database.dao.PropertyDao
 import com.example_info.rentease.database.mapper.toDomain
+import com.example_info.rentease.database.mapper.toEntity
 import com.example_info.rentease.databinding.FragmentDetailBinding
 import com.example_info.rentease.di.AliceInitializer
 import com.example_info.rentease.mock.getSampleTabTypes
@@ -73,9 +74,9 @@ class DetailFragment : Fragment() {
 
     private fun fetchDetails() {
         lifecycleScope.launch {
-            propertyDao.getById(postId)?.toDomain()?.let { detail ->
+            propertyDao.getById(postId)?.toDomain(userId)?.let { detail ->
                 _detailState.update { detail }
-            }?: showToast("No such rental post")
+            } ?: showToast("No such rental post")
         }
     }
 
@@ -128,25 +129,33 @@ class DetailFragment : Fragment() {
     }
 
     private fun doRating(rating: Int) {
-        _detailState.update {
-            it?.copy(
-                hasRated = true,
-                totalRating = it.totalRating + rating,
-                ratingList = it.ratingList + userId
-            )
+        lifecycleScope.launch {
+            detailState.value?.let {
+                val detail = it.copy(
+                    hasRated = true,
+                    totalRating = it.totalRating + rating,
+                    ratingList = it.ratingList + userId
+                )
+                propertyDao.update(detail.toEntity())
+                fetchDetails()
+            }
         }
     }
 
     private fun toggleInterest() {
-        _detailState.update { item ->
-            item?.copy(
-                hasInterested = !item.hasInterested,
-                interestedList = if (item.interestedList.contains(userId)) {
-                    item.interestedList.filter { it != userId }
-                } else {
-                    item.interestedList + userId
-                }
-            )
+        lifecycleScope.launch {
+            detailState.value?.let { item ->
+                val detail = item.copy(
+                    hasInterested = !item.hasInterested,
+                    interestedList = if (item.interestedList.contains(userId)) {
+                        item.interestedList.filter { it != userId }
+                    } else {
+                        item.interestedList + userId
+                    }
+                )
+                propertyDao.update(detail.toEntity())
+                fetchDetails()
+            }
         }
     }
 
@@ -174,7 +183,7 @@ class DetailFragment : Fragment() {
                     binding.tvLocation.text =
                         "${details.quarter}၊ ${details.region}၊ ${details.city}"
 
-                    val avgRating =
+                    val avgRating = if (details.totalRatingCount <= 0) 0 else
                         (details.totalRating.toDouble() / details.totalRatingCount.toDouble())
                             .roundToDecimalPlace(2)
 

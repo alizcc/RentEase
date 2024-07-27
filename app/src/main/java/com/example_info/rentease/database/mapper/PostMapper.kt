@@ -24,7 +24,7 @@ fun RentDetailItem.toEntity() = PropertyEntity(
     interestedList = interestedList,
 )
 
-fun PropertyEntity.toDomain() = RentDetailItem(
+fun PropertyEntity.toDomain(userId: String) = RentDetailItem(
     id = id,
     previewImage = previewImage,
     region = region,
@@ -42,6 +42,8 @@ fun PropertyEntity.toDomain() = RentDetailItem(
     contactPhone = contactPhone,
     ratingList = ratingList,
     interestedList = interestedList,
+    hasInterested = interestedList.contains(userId),
+    hasRated = ratingList.contains(userId),
 )
 
 fun PropertyEntity.toPreview() = RentPreviewItem(
