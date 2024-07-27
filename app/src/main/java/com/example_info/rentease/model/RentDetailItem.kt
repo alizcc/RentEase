@@ -14,11 +14,17 @@ data class RentDetailItem(
     val images: List<String>,
     val facilityList: List<String>,
     val description: String,
-    val interestedCount: Long,
     val totalRating: Long,
-    val totalRatingCount: Long,
     val contactPhone: String,
+    val ratingList: List<String>,
+    val interestedList: List<String>,
     // personal fields
-    val hasInterested: Boolean,
-    val hasRated: Boolean,
-)
+    val hasInterested: Boolean = false,
+    val hasRated: Boolean = false,
+) {
+    val totalRatingCount: Int
+        get() = ratingList.size
+
+    val interestedCount: Int
+        get() = interestedList.size
+}
