@@ -54,7 +54,7 @@ class ProfileFragment : Fragment() {
 
     private fun setUpListeners() {
         binding.btnEdit.setOnClickListener {
-            // navigator.navigate(SearchingFragment())
+            navigator.navigate(RegisterFragment.instanceForUpdate(preferences.currentUserId))
         }
         binding.btnBack.setOnClickListener {
             navigator.popBackStack()

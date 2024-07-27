@@ -6,6 +6,7 @@ import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.example_info.rentease.database.dao.UserDao
@@ -25,6 +26,9 @@ import kotlinx.coroutines.launch
 
 class RegisterFragment : Fragment() {
 
+    private val oldUserId: Long?
+        get() = arguments?.getLong(KEY_ID)
+
     private lateinit var binding: FragmentRegisterBinding
     private val navigator: AliceNavigator by lazy {
         AliceNavigator(parentFragmentManager)
@@ -35,6 +39,7 @@ class RegisterFragment : Fragment() {
     private val preferences: MainPreferences by lazy {
         AliceInitializer.getMainPreferences(requireContext())
     }
+    private var oldUserEntity: UserEntity? = null
 
     private fun registerUser() {
         val userEntity = with(binding.incRegister) {
@@ -44,19 +49,31 @@ class RegisterFragment : Fragment() {
                 fullName = txtName.text.toString(),
                 phone = txtMobileNumber.text.toString(),
                 email = txtEmail.text.toString(),
-            )
+            ).apply {
+                oldUserEntity?.let {
+                    this.id = it.id
+                }
+            }
         }
         lifecycleScope.launch {
             try {
                 // check user is already exist or not
                 val user = userDao.findByEmail(userEntity.email)
                 user?.let {
-                    binding.incRegister.txtEmail.showErrorAndFocus("Email is already registered")
-                    return@launch
+                    if (oldUserEntity == null) {
+                        binding.incRegister.txtEmail.showErrorAndFocus("Email is already registered")
+                        return@launch
+                    }
                 }
 
-                userDao.insertAll(userEntity)
-                showToast("Successfully registered!")
+                userDao.insert(userEntity)
+                showToast(
+                    if (oldUserEntity != null) {
+                        "Successfully updated!"
+                    } else {
+                        "Successfully registered!"
+                    }
+                )
 
                 userDao.findByEmail(userEntity.email)?.let {
                     // save current user id
@@ -74,6 +91,23 @@ class RegisterFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setUpListeners()
+        loadOldUser()
+    }
+
+    private fun loadOldUser() {
+        if (oldUserId == null) return
+        lifecycleScope.launch {
+            val userEntity = userDao.findById(oldUserId!!) ?: return@launch
+            oldUserEntity = userEntity
+            binding.incRegister.txtName.setText(userEntity.fullName)
+            binding.incRegister.txtUsername.setText(userEntity.username)
+            binding.incRegister.txtEmail.setText(userEntity.email)
+            binding.incRegister.txtMobileNumber.setText(userEntity.phone)
+            binding.incRegister.tilOldPassword.isVisible = true
+            binding.incRegister.btnRegister.text = "UPDATE"
+            binding.incRegister.tvTitle.text = "Update Profile"
+            binding.incRegister.tvLogin.isVisible = false
+        }
     }
 
     private fun setUpListeners() {
@@ -141,6 +175,14 @@ class RegisterFragment : Fragment() {
                 return
             }
 
+            if (oldUserEntity != null) {
+                val oldPassword = txtOldPassword.text?.toString().orEmpty()
+                if (oldPassword != oldUserEntity!!.password) {
+                    txtOldPassword.showErrorAndFocus("Password is incorrect")
+                    return
+                }
+            }
+
             val password = txtPassword.text?.toString().orEmpty()
             if (password.isBlank()) {
                 txtPassword.showErrorAndFocus("Password is required")
@@ -174,6 +216,17 @@ class RegisterFragment : Fragment() {
         return FragmentRegisterBinding.inflate(
             inflater, container, false
         ).also { binding = it }.root
+    }
+
+    companion object {
+        private const val KEY_ID = "key-user-id"
+        fun instanceForUpdate(userId: Long): RegisterFragment {
+            return RegisterFragment().apply {
+                arguments = Bundle().apply {
+                    putLong(KEY_ID, userId)
+                }
+            }
+        }
     }
 
 }
