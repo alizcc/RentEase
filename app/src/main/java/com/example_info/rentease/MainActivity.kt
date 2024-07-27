@@ -8,7 +8,7 @@ import com.example_info.rentease.features.LoginFragment
 import com.example_info.rentease.navigation.AliceNavigator
 import com.example_info.rentease.preferences.MainPreferences
 
-class MainActivity : AppCompatActivity() {
+class  MainActivity : AppCompatActivity() {
 
     private val preferences: MainPreferences by lazy {
         AliceInitializer.getMainPreferences(this)

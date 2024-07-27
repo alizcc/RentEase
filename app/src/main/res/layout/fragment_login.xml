@@ -51,9 +51,9 @@
                     android:layout_marginTop="40dp"
                     android:layout_marginBottom="20dp"
                     android:text="@string/quote"
-                    android:textColor="#E1D9D1"
+                    android:textColor="#48D1CC"
                     android:textSize="18sp"
-                    android:textStyle="italic" />
+                    android:textStyle="italic|bold" />
                 <include android:id="@+id/incLogin" layout="@layout/layout_login"/>
             </LinearLayout>
         </RelativeLayout>
