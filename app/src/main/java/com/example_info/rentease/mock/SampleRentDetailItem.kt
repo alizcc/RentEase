@@ -12,7 +12,7 @@ val sampleRentDetailItems = listOf(
         type = "condo",
         price = 1500000,
         creatorName = "John Doe",
-        creatorId = "1",
+        creatorId = "999",
         date = "2024-01-15",
         images = listOf(
             "https://na.rdcpix.com/63bc3db5f65286a1fb4e2b1af9e14591w-c1980730521srd_q80.jpg",
@@ -38,7 +38,7 @@ val sampleRentDetailItems = listOf(
         type = "bungalow",
         price = 3000000,
         creatorName = "Jane Smith",
-        creatorId = "1",
+        creatorId = "999",
         date = "2024-01-10",
         images = listOf(
             "https://na.rdcpix.com/63bc3db5f65286a1fb4e2b1af9e14591w-c1980730521srd_q80.jpg",
@@ -63,7 +63,7 @@ val sampleRentDetailItems = listOf(
         type = "condo",
         price = 2000000,
         creatorName = "Michael Johnson",
-        creatorId = "1",
+        creatorId = "999",
         date = "2024-01-20",
         images = listOf(
             "https://na.rdcpix.com/63bc3db5f65286a1fb4e2b1af9e14591w-c1980730521srd_q80.jpg",
@@ -89,7 +89,7 @@ val sampleRentDetailItems = listOf(
         type = "field",
         price = 200000,
         creatorName = "Emily Davis",
-        creatorId = "1",
+        creatorId = "999",
         date = "2024-01-05",
         images = listOf(
             "https://na.rdcpix.com/63bc3db5f65286a1fb4e2b1af9e14591w-c1980730521srd_q80.jpg",
@@ -114,7 +114,7 @@ val sampleRentDetailItems = listOf(
         type = "bungalow",
         price = 2700000,
         creatorName = "Chris Brown",
-        creatorId = "1",
+        creatorId = "999",
         date = "2024-01-25",
         images = listOf(
             "https://na.rdcpix.com/63bc3db5f65286a1fb4e2b1af9e14591w-c1980730521srd_q80.jpg",
@@ -140,7 +140,7 @@ val sampleRentDetailItems = listOf(
         type = "hostel",
         price = 120000,
         creatorName = "Patricia Wilson",
-        creatorId = "1",
+        creatorId = "999",
         date = "2024-01-18",
         images = listOf(
             "https://na.rdcpix.com/63bc3db5f65286a1fb4e2b1af9e14591w-c1980730521srd_q80.jpg",
@@ -165,7 +165,7 @@ val sampleRentDetailItems = listOf(
         type = "minicondo",
         price = 850000,
         creatorName = "James Anderson",
-        creatorId = "1",
+        creatorId = "999",
         date = "2024-01-12",
         images = listOf(
             "https://na.rdcpix.com/63bc3db5f65286a1fb4e2b1af9e14591w-c1980730521srd_q80.jpg",
@@ -191,7 +191,7 @@ val sampleRentDetailItems = listOf(
         type = "hostel",
         price = 70000,
         creatorName = "Linda Martinez",
-        creatorId = "1",
+        creatorId = "999",
         date = "2024-01-17",
         images = listOf(
             "https://na.rdcpix.com/63bc3db5f65286a1fb4e2b1af9e14591w-c1980730521srd_q80.jpg",
@@ -216,7 +216,7 @@ val sampleRentDetailItems = listOf(
         type = "apartment",
         price = 320000,
         creatorName = "Robert Lee",
-        creatorId = "1",
+        creatorId = "999",
         date = "2024-01-22",
         images = listOf(
             "https://na.rdcpix.com/63bc3db5f65286a1fb4e2b1af9e14591w-c1980730521srd_q80.jpg",
@@ -242,7 +242,7 @@ val sampleRentDetailItems = listOf(
         type = "apartment",
         price = 290000,
         creatorName = "Jennifer Thomas",
-        creatorId = "1",
+        creatorId = "999",
         date = "2024-01-08",
         images = listOf(
             "https://na.rdcpix.com/63bc3db5f65286a1fb4e2b1af9e14591w-c1980730521srd_q80.jpg",
@@ -267,7 +267,7 @@ val sampleRentDetailItems = listOf(
         type = "condo",
         price = 2700000,
         creatorName = "William Jackson",
-        creatorId = "1",
+        creatorId = "999",
         date = "2024-01-14",
         images = listOf(
             "https://na.rdcpix.com/63bc3db5f65286a1fb4e2b1af9e14591w-c1980730521srd_q80.jpg",
@@ -293,7 +293,7 @@ val sampleRentDetailItems = listOf(
         type = "field",
         price = 160000,
         creatorName = "Elizabeth White",
-        creatorId = "1",
+        creatorId = "999",
         date = "2024-01-23",
         images = listOf(
             "https://na.rdcpix.com/63bc3db5f65286a1fb4e2b1af9e14591w-c1980730521srd_q80.jpg",
@@ -318,7 +318,7 @@ val sampleRentDetailItems = listOf(
         type = "field",
         price = 190000,
         creatorName = "David Harris",
-        creatorId = "1",
+        creatorId = "999",
         date = "2024-01-11",
         images = listOf(
             "https://na.rdcpix.com/63bc3db5f65286a1fb4e2b1af9e14591w-c1980730521srd_q80.jpg",
@@ -344,7 +344,7 @@ val sampleRentDetailItems = listOf(
         type = "hostel",
         price = 60000,
         creatorName = "Barbara Clark",
-        creatorId = "1",
+        creatorId = "999",
         date = "2024-01-16",
         images = listOf(
             "https://na.rdcpix.com/63bc3db5f65286a1fb4e2b1af9e14591w-c1980730521srd_q80.jpg",
@@ -369,7 +369,7 @@ val sampleRentDetailItems = listOf(
         type = "minicondo",
         price = 480000,
         creatorName = "Richard Lewis",
-        creatorId = "1",
+        creatorId = "999",
         date = "2024-01-07",
         images = listOf(
             "https://na.rdcpix.com/63bc3db5f65286a1fb4e2b1af9e14591w-c1980730521srd_q80.jpg",
@@ -395,7 +395,7 @@ val sampleRentDetailItems = listOf(
         type = "minicondo",
         price = 510000,
         creatorName = "Susan Walker",
-        creatorId = "1",
+        creatorId = "999",
         date = "2024-01-19",
         images = listOf(
             "https://na.rdcpix.com/63bc3db5f65286a1fb4e2b1af9e14591w-c1980730521srd_q80.jpg",
@@ -420,7 +420,7 @@ val sampleRentDetailItems = listOf(
         type = "bungalow",
         price = 3300000,
         creatorName = "Joseph Hall",
-        creatorId = "1",
+        creatorId = "999",
         date = "2024-01-24",
         images = listOf(
             "https://na.rdcpix.com/63bc3db5f65286a1fb4e2b1af9e14591w-c1980730521srd_q80.jpg",
@@ -446,7 +446,7 @@ val sampleRentDetailItems = listOf(
         type = "bungalow",
         price = 2950000,
         creatorName = "Karen Allen",
-        creatorId = "1",
+        creatorId = "999",
         date = "2024-01-13",
         images = listOf(
             "https://na.rdcpix.com/63bc3db5f65286a1fb4e2b1af9e14591w-c1980730521srd_q80.jpg",
@@ -471,7 +471,7 @@ val sampleRentDetailItems = listOf(
         type = "apartment",
         price = 390000,
         creatorName = "Charles Young",
-        creatorId = "1",
+        creatorId = "999",
         date = "2024-01-21",
         images = listOf(
             "https://na.rdcpix.com/63bc3db5f65286a1fb4e2b1af9e14591w-c1980730521srd_q80.jpg",
@@ -497,7 +497,7 @@ val sampleRentDetailItems = listOf(
         type = "minicondo",
         price = 760000,
         creatorName = "Nancy King",
-        creatorId = "1",
+        creatorId = "999",
         date = "2024-01-09",
         images = listOf(
             "https://na.rdcpix.com/63bc3db5f65286a1fb4e2b1af9e14591w-c1980730521srd_q80.jpg",
@@ -513,30 +513,4 @@ val sampleRentDetailItems = listOf(
         interestedList = listOf("", "", "", "", ""),
         contactPhone = "+95913243435",
     ),
-)
-
-val sampleRentDetailItem = RentDetailItem(
-    id = 9L,
-    previewImage = "https://media-cdn.tripadvisor.com/media/vr-splice-j/09/d4/01/04.jpg",
-    region = "မရမ်းကုန်းမြို့နယ်",
-    quarter = "၂ရပ်ကွက်",
-    city = "ရန်ကုန်တိုင်းဒေသကြီး",
-    type = "apartment",
-    price = 320000,
-    creatorName = "Robert Lee",
-    creatorId = "1",
-    date = "2024-01-22",
-    images = listOf(
-        "https://na.rdcpix.com/63bc3db5f65286a1fb4e2b1af9e14591w-c1980730521srd_q80.jpg",
-        "https://www.montgomeryhomes.com.au/wp-content/uploads/2022/05/Montgomery-Homes-Display-Home-Bellevue-288-facade.jpg",
-        "https://www.bankrate.com/2017/10/17165457/what-to-know-before-you-buy-a-condo.jpg"
-    ),
-    facilityList = listOf(
-        "ရေချိုးခန်း", "အိမ်သာ", "Master 2 Bedrooms", "ဂျင်", "ရေကူးကန်", "ရေချိုးဇလား"
-    ),
-    description ="ပတ်ဝန်းကျင် အေးအေးဆေးဆေးနဲ့ နေလိုသူများ အတွက် အထူးသင့်လျော်ပါတယ်".trimIndent(),
-    totalRating = 10,
-    ratingList = listOf("", "", ""),
-    interestedList = listOf("", "", "", "", ""),
-    contactPhone = "+95984849984",
 )
