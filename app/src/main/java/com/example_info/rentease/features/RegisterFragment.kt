@@ -41,6 +41,13 @@ class RegisterFragment : Fragment() {
     }
     private var oldUserEntity: UserEntity? = null
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        setUpListeners()
+        loadOldUser()
+    }
+
     private fun registerUser() {
         val userEntity = with(binding.incRegister) {
             UserEntity(
@@ -85,13 +92,6 @@ class RegisterFragment : Fragment() {
                 showToast(e.message.orEmpty())
             }
         }
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
-        setUpListeners()
-        loadOldUser()
     }
 
     private fun loadOldUser() {
