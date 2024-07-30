@@ -14,6 +14,14 @@ class AliceNavigator(
     private val fragmentManager: FragmentManager,
 ) {
 
+    fun navigateAndClearAll(fragment: Fragment) {
+        val transition = fragmentManager.beginTransaction()
+        fragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+        transition.replace(R.id.fragmentContainer, fragment)
+        transition.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+        transition.commit()
+    }
+
     fun navigate(fragment: Fragment, clearBackStack: Boolean = false) {
         val transition = fragmentManager.beginTransaction()
         transition.replace(R.id.fragmentContainer, fragment)

@@ -55,6 +55,7 @@ class ProfileFragment : Fragment() {
     private fun setUpListeners() {
         binding.btnLogout.setOnClickListener {
             preferences.logout()
+            navigator.navigateAndClearAll(LoginFragment())
         }
         binding.btnEdit.setOnClickListener {
             navigator.navigate(RegisterFragment.instanceForUpdate(preferences.currentUserId))
