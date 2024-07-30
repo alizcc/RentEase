@@ -1,14 +1,25 @@
 package com.example_info.rentease.features
 
 import android.R
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.text.isDigitsOnly
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.example_info.rentease.adapter.MiniImageAdapter
 import com.example_info.rentease.database.dao.PropertyDao
 import com.example_info.rentease.database.dao.UserDao
 import com.example_info.rentease.database.mapper.toDomain
@@ -23,6 +34,10 @@ import com.example_info.rentease.navigation.AliceNavigator
 import com.example_info.rentease.preferences.MainPreferences
 import com.example_info.rentease.util.helper.DateHelper
 import com.example_info.rentease.util.helper.showToast
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class CreatePostFragment : Fragment() {
@@ -50,16 +65,89 @@ class CreatePostFragment : Fragment() {
     private val propertyTypePairList = getSampleTabTypes()
     private var oldDetailItem: RentDetailItem? = null
     private var createdDetailItem: RentDetailItem? = null
+    private lateinit var miniImageAdapter: MiniImageAdapter
+
+    private lateinit var pickPhotoLauncher: ActivityResultLauncher<Intent>
+    private lateinit var pickMultiplePhotoLauncher: ActivityResultLauncher<Intent>
+
+    private var posterImage: Uri? = null
+    private val _miniImagesState = MutableStateFlow(emptyList<Uri>())
+    val miniImagesState = _miniImagesState.asStateFlow()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setUpPhotoPicker()
+        setUpMultiplePhotoPicker()
         prepareUserInfo()
         setUpTypeSpinner()
         setUpCitySpinner()
         setUpRegionSpinner()
+        setUpOtherImagesAdapter()
         loadToUpdate()
         setUpListeners()
+        listenImageState()
+    }
+
+    private fun setUpOtherImagesAdapter() {
+        miniImageAdapter = MiniImageAdapter { uriToDelete ->
+            miniImagesState.value
+            if (miniImagesState.value.contains(uriToDelete)) {
+                _miniImagesState.update { list ->
+                    list.filter { it != uriToDelete }
+                }
+            }
+        }
+        binding.rcyImages.adapter = miniImageAdapter
+        binding.rcyImages.apply {
+            layoutManager =
+                LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        }
+    }
+
+    private fun refreshPosterImage() {
+        val showImage = posterImage != null
+        binding.llPosterEmpty.isVisible = !showImage
+        binding.ivPoster.isVisible = showImage
+        if (showImage) {
+            Glide
+                .with(requireContext())
+                .load(posterImage)
+                .into(binding.ivPoster)
+        }
+    }
+
+    private fun listenImageState() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.CREATED) {
+                miniImagesState.collectLatest {
+                    miniImageAdapter.submitList(it)
+                }
+            }
+        }
+    }
+
+    private fun setUpPhotoPicker() {
+        pickPhotoLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK && result.data != null) {
+                    val uri: Uri = result.data?.data ?: return@registerForActivityResult
+                    posterImage = uri
+                    refreshPosterImage()
+                }
+            }
+    }
+
+    private fun setUpMultiplePhotoPicker() {
+        pickMultiplePhotoLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK && result.data != null) {
+                    val uri: Uri = result.data?.data ?: return@registerForActivityResult
+                    _miniImagesState.update {
+                        it + uri
+                    }
+                }
+            }
     }
 
     private fun loadToUpdate() {
@@ -86,6 +174,16 @@ class CreatePostFragment : Fragment() {
                     val typeIndex = propertyTypePairList.indexOfFirst { it.first == item.type }
                         .takeIf { it > -1 } ?: 0
                     binding.spinnerType.setSelection(typeIndex)
+
+                    try {
+                        posterImage = Uri.parse(item.previewImage)
+                        refreshPosterImage()
+                        _miniImagesState.update {
+                            item.images.map { Uri.parse(it) }
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
                 }
         }
     }
@@ -102,6 +200,16 @@ class CreatePostFragment : Fragment() {
     }
 
     private fun setUpListeners() {
+        binding.btnAddImage.setOnClickListener {
+            val intent = Intent(Intent.ACTION_PICK)
+            intent.type = "image/*"
+            pickMultiplePhotoLauncher.launch(intent)
+        }
+        binding.cvPreviewImage.setOnClickListener {
+            val intent = Intent(Intent.ACTION_PICK)
+            intent.type = "image/*"
+            pickPhotoLauncher.launch(intent)
+        }
         binding.btnBack.setOnClickListener {
             navigator.popBackStack()
         }
@@ -191,7 +299,7 @@ class CreatePostFragment : Fragment() {
                 contactPhone = contactPhone,
             ) ?: RentDetailItem(
                 id = 0,
-                previewImage = "",
+                previewImage = posterImage?.toString().orEmpty(),
                 region = region,
                 quarter = quarter,
                 city = city,
@@ -201,7 +309,7 @@ class CreatePostFragment : Fragment() {
                 creatorId = preferences.currentUserId.toString(),
                 description = description,
                 facilityList = facilities.split(",").map { it.trim() },
-                images = emptyList(),
+                images = miniImagesState.value.map { it.toString() },
                 date = DateHelper.todayFormattedDate,
                 contactPhone = contactPhone,
                 totalRating = 0,
@@ -262,6 +370,10 @@ class CreatePostFragment : Fragment() {
     }
 
     companion object {
+        private const val KEY_IMAGE_TYPE_SINGLE = 102
+        private const val KEY_IMAGE_TYPE_MULTIPLE = 103
+
+        private const val KEY_IMAGE_PICKER_TYPE = "key-image-picker-type"
         private const val KEY_ID = "key-post-id"
         fun instanceForUpdate(postId: Long): CreatePostFragment {
             return CreatePostFragment().apply {
