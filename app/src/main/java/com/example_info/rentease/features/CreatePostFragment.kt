@@ -171,6 +171,9 @@ class CreatePostFragment : Fragment() {
                     val regionIndex = regionList.indexOf(item.region).takeIf { it > -1 } ?: 0
                     binding.spinnerRegion.setSelection(regionIndex)
 
+                    binding.tvTitle.text = "Update Rent Post"
+                    binding.btnPost.text = "UPDATE NOW"
+
                     val typeIndex = propertyTypePairList.indexOfFirst { it.first == item.type }
                         .takeIf { it > -1 } ?: 0
                     binding.spinnerType.setSelection(typeIndex)
@@ -221,7 +224,11 @@ class CreatePostFragment : Fragment() {
     private fun createPost(createdDetailItem: RentDetailItem) {
         lifecycleScope.launch {
             propertyDao.insert(createdDetailItem.toEntity())
-            showToast("Successfully created!")
+            if (oldDetailItem == null) {
+                showToast("Successfully created!")
+            } else {
+                showToast("Successfully updated!")
+            }
             navigator.popBackStack()
         }
     }
