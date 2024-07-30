@@ -18,6 +18,10 @@ class MainPreferences(context: Context) {
     val isLoggedIn: Boolean
         get() = currentUserId > -1
 
+    fun logout() {
+        currentUserId = -1
+    }
+
     private val preferences by lazy {
         context.getSharedPreferences(MY_PREF, Context.MODE_PRIVATE)
     }
