@@ -15,6 +15,7 @@ data class UserEntity(
     val fullName: String,
     val phone: String,
     val email: String,
+    val image: String? = null,
 ) {
     @PrimaryKey(autoGenerate = true)
     var id: Long = 0

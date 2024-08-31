@@ -23,6 +23,7 @@ import com.example_info.rentease.mock.getSampleTabTypes
 import com.example_info.rentease.model.RentPreviewItem
 import com.example_info.rentease.navigation.AliceNavigator
 import com.example_info.rentease.preferences.MainPreferences
+import com.example_info.rentease.util.helper.tryLoad
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import kotlinx.coroutines.launch
@@ -66,7 +67,7 @@ class HomeFragment : Fragment() {
         binding.btnAdd.setOnClickListener {
             navigator.navigate(CreatePostFragment())
         }
-        binding.civProfile.setOnClickListener {
+        binding.cvProfile.setOnClickListener {
             navigator.navigate(ProfileFragment())
         }
         binding.tvTitle.setOnClickListener {
@@ -76,14 +77,11 @@ class HomeFragment : Fragment() {
 
     private fun loadUserInfo() {
         lifecycleScope.launch {
-            Glide.with(requireContext())
-                .load("https://i1.sndcdn.com/avatars-000339084123-nag0p1-t240x240.jpg")
-                .into(binding.civProfile)
-
             val userId = preferences.currentUserId
             if (userId > 0) {
                 userDao.findById(userId)?.let { user ->
                     binding.tvTitle.text = user.fullName
+                    binding.ivProfile.tryLoad(user.image)
                 }
             }
         }

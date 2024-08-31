@@ -17,7 +17,11 @@ import com.example_info.rentease.database.entity.UserEntity
 
 @Database(
     entities = [UserEntity::class, PropertyEntity::class],
-    version = 1,
+    version = 2,
+    exportSchema = true,
+    autoMigrations = [
+        AutoMigration(from = 1, to = 2),
+    ]
 )
 @TypeConverters(Converters::class)
 abstract class RentEaseDB : RoomDatabase() {

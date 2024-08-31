@@ -27,11 +27,24 @@
             app:tint="@color/black"
             android:src="@drawable/ic_back_arrow" />
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/civProfile"
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvProfile"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            tools:src="@tools:sample/avatars" />
+            app:cardUseCompatPadding="false"
+            app:cardCornerRadius="40dp"
+            app:cardElevation="0dp">
+
+            <ImageView
+                android:id="@+id/ivProfile"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                tools:src="@tools:sample/avatars"
+                android:background="@color/primary_color_10"
+                />
+
+        </androidx.cardview.widget.CardView>
 
         <TextView
             android:id="@+id/tvTitle"

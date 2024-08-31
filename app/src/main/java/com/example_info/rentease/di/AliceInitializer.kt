@@ -31,7 +31,7 @@ object AliceInitializer {
         _database = Room.databaseBuilder(context, RentEaseDB::class.java, AppConstants.DB_NAME)
             .allowMainThreadQueries()
             .addCallback(PropertyDatabaseCallback(context))
-            .fallbackToDestructiveMigration()
+//            .fallbackToDestructiveMigration()
             .build()
         return _database!!
     }

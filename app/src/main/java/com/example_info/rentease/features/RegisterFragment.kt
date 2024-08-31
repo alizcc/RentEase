@@ -1,14 +1,20 @@
 package com.example_info.rentease.features
 
+import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import com.bumptech.glide.Glide
 import com.example_info.rentease.database.dao.UserDao
 import com.example_info.rentease.database.entity.UserEntity
 import com.example_info.rentease.databinding.FragmentRegisterBinding
@@ -17,6 +23,7 @@ import com.example_info.rentease.navigation.AliceNavigator
 import com.example_info.rentease.preferences.MainPreferences
 import com.example_info.rentease.util.helper.showErrorAndFocus
 import com.example_info.rentease.util.helper.showToast
+import com.example_info.rentease.util.helper.tryParseToUri
 import kotlinx.coroutines.launch
 
 /**
@@ -41,11 +48,44 @@ class RegisterFragment : Fragment() {
     }
     private var oldUserEntity: UserEntity? = null
 
+    private lateinit var pickPhotoLauncher: ActivityResultLauncher<Intent>
+    private var posterImage: Uri? = null
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         setUpListeners()
         loadOldUser()
+        setUpPhotoPicker()
+    }
+
+    private fun pickProfilePhoto() {
+        val intent = Intent(Intent.ACTION_PICK)
+        intent.type = "image/*"
+        pickPhotoLauncher.launch(intent)
+    }
+
+    private fun setUpPhotoPicker() {
+        pickPhotoLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == Activity.RESULT_OK && result.data != null) {
+                    val uri: Uri = result.data?.data ?: return@registerForActivityResult
+                    posterImage = uri
+                    refreshPosterImage()
+                }
+            }
+    }
+
+    private fun refreshPosterImage() {
+        val showImage = posterImage != null
+        binding.incRegister.ivNoProfile.isVisible = !showImage
+        binding.incRegister.ivPoster.isVisible = showImage
+        if (showImage) {
+            Glide
+                .with(requireContext())
+                .load(posterImage)
+                .into(binding.incRegister.ivPoster)
+        }
     }
 
     private fun registerUser() {
@@ -56,6 +96,7 @@ class RegisterFragment : Fragment() {
                 fullName = txtName.text.toString(),
                 phone = txtMobileNumber.text.toString(),
                 email = txtEmail.text.toString(),
+                image = posterImage?.toString()
             ).apply {
                 oldUserEntity?.let {
                     this.id = it.id
@@ -108,6 +149,8 @@ class RegisterFragment : Fragment() {
             binding.incRegister.tvTitle.text = "Update Profile"
             binding.incRegister.tvLogin.isVisible = false
             binding.btnBack.isVisible = true
+            posterImage = tryParseToUri(userEntity.image)
+            refreshPosterImage()
         }
     }
 
@@ -120,6 +163,9 @@ class RegisterFragment : Fragment() {
         }
         binding.btnBack.setOnClickListener {
             navigator.popBackStack()
+        }
+        binding.incRegister.cvPreviewImage.setOnClickListener {
+            pickProfilePhoto()
         }
     }
 
