@@ -90,9 +90,10 @@ class RegisterFragment : Fragment() {
 
     private fun registerUser() {
         val userEntity = with(binding.incRegister) {
+            val userPassword = txtPassword.text.toString().takeIf { it.isNotBlank() }?: oldUserEntity?.password
             UserEntity(
                 username = txtUsername.text.toString(),
-                password = txtPassword.text.toString(),
+                password = userPassword.orEmpty(),
                 fullName = txtName.text.toString(),
                 phone = txtMobileNumber.text.toString(),
                 email = txtEmail.text.toString(),
@@ -225,32 +226,43 @@ class RegisterFragment : Fragment() {
                 return
             }
 
-            if (oldUserEntity != null) {
-                val oldPassword = txtOldPassword.text?.toString().orEmpty()
+            val oldPassword = txtOldPassword.text?.toString().orEmpty()
+            val password = txtPassword.text?.toString().orEmpty()
+            val password2 = txtConfirmPassword.text?.toString().orEmpty()
+
+            val shouldCheckOldPassword = oldUserEntity != null
+                    && (oldPassword.isNotBlank() || password.isNotBlank() || password2.isNotBlank())
+
+            if (shouldCheckOldPassword) {
                 if (oldPassword != oldUserEntity!!.password) {
                     txtOldPassword.showErrorAndFocus("Password is incorrect")
                     return
                 }
             }
 
-            val password = txtPassword.text?.toString().orEmpty()
-            if (password.isBlank()) {
-                txtPassword.showErrorAndFocus("Password is required")
-                return
-            }
-            if (password.length < 6) {
-                txtPassword.showErrorAndFocus("Password should be at least 6 characters")
-                return
-            }
+            val shouldSkipPasswordValidation = oldUserEntity != null
+                    && oldPassword.isBlank()
+                    && password.isBlank()
+                    && password2.isBlank()
 
-            val password2 = txtConfirmPassword.text?.toString().orEmpty()
-            if (password2.isBlank()) {
-                txtConfirmPassword.showErrorAndFocus("Confirm Password is required")
-                return
-            }
-            if (password != password2) {
-                txtConfirmPassword.showErrorAndFocus("Passwords are not matched")
-                return
+            if (!shouldSkipPasswordValidation) {
+                if (password.isBlank()) {
+                    txtPassword.showErrorAndFocus("Password is required")
+                    return
+                }
+                if (password.length < 6) {
+                    txtPassword.showErrorAndFocus("Password should be at least 6 characters")
+                    return
+                }
+
+                if (password2.isBlank()) {
+                    txtConfirmPassword.showErrorAndFocus("Confirm Password is required")
+                    return
+                }
+                if (password != password2) {
+                    txtConfirmPassword.showErrorAndFocus("Passwords are not matched")
+                    return
+                }
             }
 
             registerUser()
