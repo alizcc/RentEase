@@ -26,11 +26,6 @@ import com.example_info.rentease.util.helper.showToast
 import com.example_info.rentease.util.helper.tryParseToUri
 import kotlinx.coroutines.launch
 
-/**
- * Created by AP-Jake
- * on 09/06/2024
- */
-
 class RegisterFragment : Fragment() {
 
     private val oldUserId: Long?

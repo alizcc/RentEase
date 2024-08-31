@@ -5,11 +5,6 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.example_info.rentease.R
 
-/**
- * Created by AP-Jake
- * on 09/06/2024
- */
-
 class AliceNavigator(
     private val fragmentManager: FragmentManager,
 ) {

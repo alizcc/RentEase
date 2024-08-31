@@ -7,12 +7,6 @@ import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.example_info.rentease.R
 
-/**
- * Created by AP-Jake
- * on 09/06/2024
- */
-
-
 fun EditText.showErrorAndFocus(error: String) {
     this.error = error
     this.requestFocus()

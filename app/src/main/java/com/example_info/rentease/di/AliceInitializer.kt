@@ -8,11 +8,6 @@ import com.example_info.rentease.preferences.MainPreferences
 import com.example_info.rentease.util.constants.AppConstants
 
 /**
- * Created by AP-Jake
- * on 09/06/2024
- */
-
-/**
  * Easy to use the database and preferences class
  */
 object AliceInitializer {

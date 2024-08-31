@@ -10,11 +10,6 @@ import com.example_info.rentease.database.dao.UserDao
 import com.example_info.rentease.database.entity.PropertyEntity
 import com.example_info.rentease.database.entity.UserEntity
 
-/**
- * Created by AP-Jake
- * on 09/06/2024
- */
-
 @Database(
     entities = [UserEntity::class, PropertyEntity::class],
     version = 2,

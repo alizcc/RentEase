@@ -2,11 +2,6 @@ package com.example_info.rentease.preferences
 
 import android.content.Context
 
-/**
- * Created by AP-Jake
- * on 09/06/2024
- */
-
 class MainPreferences(context: Context) {
 
     var currentUserId: Long

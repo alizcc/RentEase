@@ -15,11 +15,6 @@ import com.example_info.rentease.util.helper.showErrorAndFocus
 import com.example_info.rentease.util.helper.showToast
 import kotlinx.coroutines.launch
 
-/**
- * Created by AP-Jake
- * on 09/06/2024
- */
-
 class LoginFragment : Fragment() {
 
     private lateinit var binding: FragmentLoginBinding

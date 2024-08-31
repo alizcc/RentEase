@@ -8,11 +8,6 @@ import androidx.room.Query
 import androidx.room.Update
 import com.example_info.rentease.database.entity.UserEntity
 
-/**
- * Created by AP-Jake
- * on 09/06/2024
- */
-
 @Dao
 interface UserDao {
     @Query("SELECT * FROM user_entity")
