@@ -2,10 +2,12 @@ package com.example_info.rentease.features
 
 import android.R
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
+import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.view.isVisible
@@ -18,6 +20,8 @@ import com.example_info.rentease.database.dao.PropertyDao
 import com.example_info.rentease.database.mapper.toPreview
 import com.example_info.rentease.databinding.FragmentSearchingBinding
 import com.example_info.rentease.di.AliceInitializer
+import com.example_info.rentease.mock.getRegionList
+import com.example_info.rentease.mock.getTypePairList
 import com.example_info.rentease.model.RentPreviewItem
 import com.example_info.rentease.navigation.AliceNavigator
 import com.example_info.rentease.util.helper.asCommaSeparated
@@ -47,7 +51,7 @@ class SearchingFragment : Fragment() {
     private var filteredMinPriceIndex: Int = -1
     private var filteredMaxPrice: Long = priceList[priceList.size - 1]
     private var filteredMaxPriceIndex: Int = -1
-
+    private val typePairList = getTypePairList()
     private var previewItemList: List<RentPreviewItem> = emptyList()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -56,7 +60,9 @@ class SearchingFragment : Fragment() {
         setUpSpinners()
         setUpListeners()
         setUpAdapter()
+        setUpRegionSpinner()
         loadPreviewItems()
+        refreshFilterList()
     }
 
     private fun loadPreviewItems() {
@@ -84,7 +90,7 @@ class SearchingFragment : Fragment() {
 
     private fun setUpAdapter() {
         adapter = RentPreviewAdapter {
-            Toast.makeText(requireContext(), it.region, Toast.LENGTH_SHORT).show()
+            navigator.navigate(DetailFragment.instance(it.id))
         }
         binding.rcyItems.adapter = adapter
         binding.rcyItems.layoutManager = LinearLayoutManager(requireContext())
@@ -115,6 +121,7 @@ class SearchingFragment : Fragment() {
         }
 
         val filteredTypes = createTypeList()
+
         if (filteredTypes.isNotEmpty()) {
             filteredItems = filteredItems.filter {
                 filteredTypes.contains(it.type.lowercase())
@@ -206,23 +213,33 @@ class SearchingFragment : Fragment() {
 
                 override fun onNothingSelected(parent: AdapterView<*>?) {}
             }
-        binding.cbCondo.setOnCheckedChangeListener { _, _ ->
-            refreshFilterList()
+
+    }
+
+    private fun setUpRegionSpinner() {
+        val adapter = ArrayAdapter(
+            requireContext(),
+            R.layout.simple_spinner_item,
+            typePairList.map { it.second }
+        )
+        adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
+        binding.spinnerRegion.adapter = adapter
+        if (binding.spinnerRegion.selectedItemPosition < 0) {
+            binding.spinnerRegion.setSelection(0)
         }
-        binding.cbField.setOnCheckedChangeListener { _, _ ->
-            refreshFilterList()
-        }
-        binding.cbHostel.setOnCheckedChangeListener { _, _ ->
-            refreshFilterList()
-        }
-        binding.cbBungalow.setOnCheckedChangeListener { _, _ ->
-            refreshFilterList()
-        }
-        binding.cbApartment.setOnCheckedChangeListener { _, _ ->
-            refreshFilterList()
-        }
-        binding.cbMiniCondo.setOnCheckedChangeListener { _, _ ->
-            refreshFilterList()
+        binding.spinnerRegion.onItemSelectedListener = object : OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
+                refreshFilterList()
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                refreshFilterList()
+            }
         }
     }
 
@@ -230,24 +247,8 @@ class SearchingFragment : Fragment() {
         val filteredTypes = mutableListOf<String>()
 
         filteredTypes.apply {
-            if (binding.cbCondo.isChecked) {
-                add("condo")
-            }
-            if (binding.cbMiniCondo.isChecked) {
-                add("minicondo")
-            }
-            if (binding.cbField.isChecked) {
-                add("field")
-            }
-            if (binding.cbBungalow.isChecked) {
-                add("bungalow")
-            }
-            if (binding.cbApartment.isChecked) {
-                add("apartment")
-            }
-            if (binding.cbHostel.isChecked) {
-                add("hostel")
-            }
+            val regionKey = typePairList[binding.spinnerRegion.selectedItemPosition].first
+            add(regionKey)
         }
         return filteredTypes
     }
