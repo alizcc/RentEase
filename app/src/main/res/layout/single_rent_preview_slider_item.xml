@@ -24,17 +24,41 @@
             android:background="@drawable/bg_black_gradient" />
 
         <TextView
-            android:id="@+id/tvTitle"
+            android:id="@+id/tvType"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:layout_marginTop="8dp"
+            android:layout_margin="16dp"
             android:textColor="@color/white"
-            android:textSize="16sp"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Type" />
+
+        <TextView
+            android:id="@+id/tvRegion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="4dp"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/tvPrice"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="This is Region" />
+
+        <TextView
+            android:id="@+id/tvPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:textColor="@color/white"
+            android:textSize="12sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            tools:text="Dinner Ideas" />
+            tools:text="300,000Ks" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

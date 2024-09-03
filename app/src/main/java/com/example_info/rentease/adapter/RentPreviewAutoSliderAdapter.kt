@@ -5,7 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example_info.rentease.databinding.SingleRentPreviewSliderItemBinding
+import com.example_info.rentease.mock.getSampleTabTypes
 import com.example_info.rentease.model.RentPreviewItem
+import com.example_info.rentease.util.helper.asCommaSeparated
 
 class RentPreviewAutoSliderAdapter(
     private val items: List<RentPreviewItem>,
@@ -37,13 +39,16 @@ class RentPreviewAutoSliderAdapter(
     ) : RecyclerView.ViewHolder(
         binding.root
     ) {
+        private val propertyTypePairList = getSampleTabTypes()
 
         fun bind(item: RentPreviewItem) {
             Glide
                 .with(binding.root.context)
                 .load(item.previewImage)
                 .into(binding.ivPoster)
-            binding.tvTitle.text = item.city
+            binding.tvRegion.text = item.quarter + ", " + item.region
+            binding.tvPrice.text = item.price.asCommaSeparated
+            binding.tvType.text = propertyTypePairList.find { it.first == item.type }?.second.orEmpty()
             binding.root.setOnClickListener {
                 onClick(item)
             }
