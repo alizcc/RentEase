@@ -53,7 +53,7 @@
                     android:text="@string/quote"
                     android:textColor="#48D1CC"
                     android:textSize="18sp"
-                    android:textStyle="italic" />
+                    android:textStyle="italic|bold" />
                 <include android:id="@+id/incRegister" layout="@layout/layout_register"/>
             </LinearLayout>
 
