@@ -4,17 +4,6 @@ fun getCityList() = sampleCities
 
 fun getRegionList() = sampleRegions
 
-fun getTypePairList() = types
-
-private val types = listOf(
-    "condo" to "ကွန်ဒို",
-    "minicondo" to "မီနီကွန်ဒို",
-    "field" to "မြေကွက်/ခြံ",
-    "bungalow" to "လုံးချင်းအိမ်",
-    "apartment" to "တိုက်ခန်း",
-    "hostel" to "အဆောင်",
-)
-
 private val sampleCities = listOf(
     "ရန်ကုန်တိုင်းဒေသကြီး"
 )
