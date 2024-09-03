@@ -18,13 +18,15 @@ import com.example_info.rentease.database.dao.PropertyDao
 import com.example_info.rentease.database.mapper.toPreview
 import com.example_info.rentease.databinding.FragmentSearchingBinding
 import com.example_info.rentease.di.AliceInitializer
+import com.example_info.rentease.mock.getCityList
+import com.example_info.rentease.mock.getRegionList
 import com.example_info.rentease.model.RentPreviewItem
 import com.example_info.rentease.navigation.AliceNavigator
 import com.example_info.rentease.util.helper.asCommaSeparated
 import com.example_info.rentease.util.helper.showToast
 import kotlinx.coroutines.launch
 
-class SearchingFragment : Fragment() {
+class SearchingFragment : Fragment(), AdapterView.OnItemSelectedListener {
 
     private lateinit var binding: FragmentSearchingBinding
 
@@ -38,8 +40,9 @@ class SearchingFragment : Fragment() {
         AliceInitializer.getDatabase(requireContext()).propertyDao()
     }
 
-    private var filteredRegion: String = ""
-    private var filteredCity: String = ""
+    private val cityList = getCityList()
+    private val regionList = getRegionList()
+
     private var filteredQuarter: String = ""
     private val priceList = (0..120).map { 50000L + (it * 50000L) }
 
@@ -54,6 +57,8 @@ class SearchingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setUpSpinners()
+        setUpCitySpinner()
+        setUpRegionSpinner()
         setUpListeners()
         setUpAdapter()
         loadPreviewItems()
@@ -64,6 +69,32 @@ class SearchingFragment : Fragment() {
             val items = propertyDao.getAll()
             previewItemList = items.map { it.toPreview() }
             refreshFilterList()
+        }
+    }
+
+    private fun setUpCitySpinner() {
+        val adapter = ArrayAdapter(
+            requireContext(),
+            R.layout.simple_spinner_item,
+            cityList
+        )
+        adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
+        binding.spinnerCity.adapter = adapter
+        if (binding.spinnerCity.selectedItemPosition < 0) {
+            binding.spinnerCity.setSelection(0)
+        }
+    }
+
+    private fun setUpRegionSpinner() {
+        val adapter = ArrayAdapter(
+            requireContext(),
+            R.layout.simple_spinner_item,
+            regionList
+        )
+        adapter.setDropDownViewResource(R.layout.simple_spinner_dropdown_item)
+        binding.spinnerRegion.adapter = adapter
+        if (binding.spinnerRegion.selectedItemPosition < 0) {
+            binding.spinnerRegion.setSelection(0)
         }
     }
 
@@ -92,12 +123,15 @@ class SearchingFragment : Fragment() {
 
     private fun refreshFilterList() {
         var filteredItems = previewItemList
+
+        val filteredRegion = binding.spinnerRegion.selectedItem.toString()
         if (filteredRegion.isNotBlank()) {
             filteredItems = filteredItems.filter {
                 it.region.contains(filteredRegion, true)
             }
         }
 
+        val filteredCity = binding.spinnerCity.selectedItem.toString()
         if (filteredCity.isNotBlank()) {
             filteredItems = filteredItems.filter {
                 it.city.contains(filteredCity, true)
@@ -139,18 +173,7 @@ class SearchingFragment : Fragment() {
             binding.btnOpenFilter.isVisible = true
             binding.btnCloseFilter.isVisible = false
         }
-        binding.edtSearchRegion.addTextChangedListener { edt ->
-            edt?.toString()?.let {
-                filteredRegion = it
-                refreshFilterList()
-            }
-        }
-        binding.edtSearchCity.addTextChangedListener { edt ->
-            edt?.toString()?.let {
-                filteredCity = it
-                refreshFilterList()
-            }
-        }
+        binding.spinnerRegion.onItemSelectedListener = this
         binding.edtSearchQuarter.addTextChangedListener { edt ->
             edt?.toString()?.let {
                 filteredQuarter = it
@@ -260,6 +283,14 @@ class SearchingFragment : Fragment() {
         return FragmentSearchingBinding.inflate(
             inflater, container, false
         ).also { binding = it }.root
+    }
+
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        refreshFilterList()
+    }
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
+        refreshFilterList()
     }
 
 }
