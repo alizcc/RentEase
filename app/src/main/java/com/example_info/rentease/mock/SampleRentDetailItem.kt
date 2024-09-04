@@ -15,8 +15,8 @@ val sampleRentDetailItems = listOf(
         creatorId = "999",
         date = "2024-01-15",
         images = listOf(
-            "https://na.rdcpix.com/63bc3db5f65286a1fb4e2b1af9e14591w-c1980730521srd_q80.jpg",
-            "https://www.montgomeryhomes.com.au/wp-content/uploads/2022/05/Montgomery-Homes-Display-Home-Bellevue-288-facade.jpg",
+            "https://www.propertypro.ng/blog/wp-content/uploads/2023/07/pexels-max-rahubovskiy-6782426-780x470.jpg",
+            "https://photos.spotahome.com/fsobscale_1600_900_nonverified_ur_15_50/68d6b48c6f36063742fa01bdc39b3f55c4775e08d646ae232cc80746.jpg",
             "https://www.bankrate.com/2017/10/17165457/what-to-know-before-you-buy-a-condo.jpg"
         ),
         facilityList = listOf(
@@ -41,8 +41,8 @@ val sampleRentDetailItems = listOf(
         creatorId = "999",
         date = "2024-01-10",
         images = listOf(
-            "https://na.rdcpix.com/63bc3db5f65286a1fb4e2b1af9e14591w-c1980730521srd_q80.jpg",
-            "https://www.montgomeryhomes.com.au/wp-content/uploads/2022/05/Montgomery-Homes-Display-Home-Bellevue-288-facade.jpg",
+            "https://www.propertypro.ng/blog/wp-content/uploads/2023/07/pexels-max-rahubovskiy-6782426-780x470.jpg",
+            "https://photos.spotahome.com/fsobscale_1600_900_nonverified_ur_15_50/68d6b48c6f36063742fa01bdc39b3f55c4775e08d646ae232cc80746.jpg",
             "https://www.bankrate.com/2017/10/17165457/what-to-know-before-you-buy-a-condo.jpg"
         ),
         facilityList = listOf(
@@ -66,8 +66,8 @@ val sampleRentDetailItems = listOf(
         creatorId = "999",
         date = "2024-01-20",
         images = listOf(
-            "https://na.rdcpix.com/63bc3db5f65286a1fb4e2b1af9e14591w-c1980730521srd_q80.jpg",
-            "https://www.montgomeryhomes.com.au/wp-content/uploads/2022/05/Montgomery-Homes-Display-Home-Bellevue-288-facade.jpg",
+            "https://www.propertypro.ng/blog/wp-content/uploads/2023/07/pexels-max-rahubovskiy-6782426-780x470.jpg",
+            "https://photos.spotahome.com/fsobscale_1600_900_nonverified_ur_15_50/68d6b48c6f36063742fa01bdc39b3f55c4775e08d646ae232cc80746.jpg",
             "https://www.bankrate.com/2017/10/17165457/what-to-know-before-you-buy-a-condo.jpg"
         ),
         facilityList = listOf(
@@ -92,8 +92,8 @@ val sampleRentDetailItems = listOf(
         creatorId = "999",
         date = "2024-01-05",
         images = listOf(
-            "https://na.rdcpix.com/63bc3db5f65286a1fb4e2b1af9e14591w-c1980730521srd_q80.jpg",
-            "https://www.montgomeryhomes.com.au/wp-content/uploads/2022/05/Montgomery-Homes-Display-Home-Bellevue-288-facade.jpg",
+            "https://www.propertypro.ng/blog/wp-content/uploads/2023/07/pexels-max-rahubovskiy-6782426-780x470.jpg",
+            "https://photos.spotahome.com/fsobscale_1600_900_nonverified_ur_15_50/68d6b48c6f36063742fa01bdc39b3f55c4775e08d646ae232cc80746.jpg",
             "https://www.bankrate.com/2017/10/17165457/what-to-know-before-you-buy-a-condo.jpg"
         ),
         facilityList = listOf(
@@ -117,8 +117,8 @@ val sampleRentDetailItems = listOf(
         creatorId = "999",
         date = "2024-01-25",
         images = listOf(
-            "https://na.rdcpix.com/63bc3db5f65286a1fb4e2b1af9e14591w-c1980730521srd_q80.jpg",
-            "https://www.montgomeryhomes.com.au/wp-content/uploads/2022/05/Montgomery-Homes-Display-Home-Bellevue-288-facade.jpg",
+            "https://www.propertypro.ng/blog/wp-content/uploads/2023/07/pexels-max-rahubovskiy-6782426-780x470.jpg",
+            "https://photos.spotahome.com/fsobscale_1600_900_nonverified_ur_15_50/68d6b48c6f36063742fa01bdc39b3f55c4775e08d646ae232cc80746.jpg",
             "https://www.bankrate.com/2017/10/17165457/what-to-know-before-you-buy-a-condo.jpg"
         ),
         facilityList = listOf(
@@ -143,8 +143,8 @@ val sampleRentDetailItems = listOf(
         creatorId = "999",
         date = "2024-01-18",
         images = listOf(
-            "https://na.rdcpix.com/63bc3db5f65286a1fb4e2b1af9e14591w-c1980730521srd_q80.jpg",
-            "https://www.montgomeryhomes.com.au/wp-content/uploads/2022/05/Montgomery-Homes-Display-Home-Bellevue-288-facade.jpg",
+            "https://www.propertypro.ng/blog/wp-content/uploads/2023/07/pexels-max-rahubovskiy-6782426-780x470.jpg",
+            "https://photos.spotahome.com/fsobscale_1600_900_nonverified_ur_15_50/68d6b48c6f36063742fa01bdc39b3f55c4775e08d646ae232cc80746.jpg",
             "https://www.bankrate.com/2017/10/17165457/what-to-know-before-you-buy-a-condo.jpg"
         ),
         facilityList = listOf(
@@ -168,8 +168,8 @@ val sampleRentDetailItems = listOf(
         creatorId = "999",
         date = "2024-01-12",
         images = listOf(
-            "https://na.rdcpix.com/63bc3db5f65286a1fb4e2b1af9e14591w-c1980730521srd_q80.jpg",
-            "https://www.montgomeryhomes.com.au/wp-content/uploads/2022/05/Montgomery-Homes-Display-Home-Bellevue-288-facade.jpg",
+            "https://www.propertypro.ng/blog/wp-content/uploads/2023/07/pexels-max-rahubovskiy-6782426-780x470.jpg",
+            "https://photos.spotahome.com/fsobscale_1600_900_nonverified_ur_15_50/68d6b48c6f36063742fa01bdc39b3f55c4775e08d646ae232cc80746.jpg",
             "https://www.bankrate.com/2017/10/17165457/what-to-know-before-you-buy-a-condo.jpg"
         ),
         facilityList = listOf(
@@ -194,8 +194,8 @@ val sampleRentDetailItems = listOf(
         creatorId = "999",
         date = "2024-01-17",
         images = listOf(
-            "https://na.rdcpix.com/63bc3db5f65286a1fb4e2b1af9e14591w-c1980730521srd_q80.jpg",
-            "https://www.montgomeryhomes.com.au/wp-content/uploads/2022/05/Montgomery-Homes-Display-Home-Bellevue-288-facade.jpg",
+            "https://www.propertypro.ng/blog/wp-content/uploads/2023/07/pexels-max-rahubovskiy-6782426-780x470.jpg",
+            "https://photos.spotahome.com/fsobscale_1600_900_nonverified_ur_15_50/68d6b48c6f36063742fa01bdc39b3f55c4775e08d646ae232cc80746.jpg",
             "https://www.bankrate.com/2017/10/17165457/what-to-know-before-you-buy-a-condo.jpg"
         ),
         facilityList = listOf(
@@ -219,8 +219,8 @@ val sampleRentDetailItems = listOf(
         creatorId = "999",
         date = "2024-01-22",
         images = listOf(
-            "https://na.rdcpix.com/63bc3db5f65286a1fb4e2b1af9e14591w-c1980730521srd_q80.jpg",
-            "https://www.montgomeryhomes.com.au/wp-content/uploads/2022/05/Montgomery-Homes-Display-Home-Bellevue-288-facade.jpg",
+            "https://www.propertypro.ng/blog/wp-content/uploads/2023/07/pexels-max-rahubovskiy-6782426-780x470.jpg",
+            "https://photos.spotahome.com/fsobscale_1600_900_nonverified_ur_15_50/68d6b48c6f36063742fa01bdc39b3f55c4775e08d646ae232cc80746.jpg",
             "https://www.bankrate.com/2017/10/17165457/what-to-know-before-you-buy-a-condo.jpg"
         ),
         facilityList = listOf(
@@ -245,8 +245,8 @@ val sampleRentDetailItems = listOf(
         creatorId = "999",
         date = "2024-01-08",
         images = listOf(
-            "https://na.rdcpix.com/63bc3db5f65286a1fb4e2b1af9e14591w-c1980730521srd_q80.jpg",
-            "https://www.montgomeryhomes.com.au/wp-content/uploads/2022/05/Montgomery-Homes-Display-Home-Bellevue-288-facade.jpg",
+            "https://www.propertypro.ng/blog/wp-content/uploads/2023/07/pexels-max-rahubovskiy-6782426-780x470.jpg",
+            "https://photos.spotahome.com/fsobscale_1600_900_nonverified_ur_15_50/68d6b48c6f36063742fa01bdc39b3f55c4775e08d646ae232cc80746.jpg",
             "https://www.bankrate.com/2017/10/17165457/what-to-know-before-you-buy-a-condo.jpg"
         ),
         facilityList = listOf(
@@ -270,8 +270,8 @@ val sampleRentDetailItems = listOf(
         creatorId = "999",
         date = "2024-01-14",
         images = listOf(
-            "https://na.rdcpix.com/63bc3db5f65286a1fb4e2b1af9e14591w-c1980730521srd_q80.jpg",
-            "https://www.montgomeryhomes.com.au/wp-content/uploads/2022/05/Montgomery-Homes-Display-Home-Bellevue-288-facade.jpg",
+            "https://www.propertypro.ng/blog/wp-content/uploads/2023/07/pexels-max-rahubovskiy-6782426-780x470.jpg",
+            "https://photos.spotahome.com/fsobscale_1600_900_nonverified_ur_15_50/68d6b48c6f36063742fa01bdc39b3f55c4775e08d646ae232cc80746.jpg",
             "https://www.bankrate.com/2017/10/17165457/what-to-know-before-you-buy-a-condo.jpg"
         ),
         facilityList = listOf(
@@ -296,8 +296,8 @@ val sampleRentDetailItems = listOf(
         creatorId = "999",
         date = "2024-01-23",
         images = listOf(
-            "https://na.rdcpix.com/63bc3db5f65286a1fb4e2b1af9e14591w-c1980730521srd_q80.jpg",
-            "https://www.montgomeryhomes.com.au/wp-content/uploads/2022/05/Montgomery-Homes-Display-Home-Bellevue-288-facade.jpg",
+            "https://www.propertypro.ng/blog/wp-content/uploads/2023/07/pexels-max-rahubovskiy-6782426-780x470.jpg",
+            "https://photos.spotahome.com/fsobscale_1600_900_nonverified_ur_15_50/68d6b48c6f36063742fa01bdc39b3f55c4775e08d646ae232cc80746.jpg",
             "https://www.bankrate.com/2017/10/17165457/what-to-know-before-you-buy-a-condo.jpg"
         ),
         facilityList = listOf(
@@ -321,8 +321,8 @@ val sampleRentDetailItems = listOf(
         creatorId = "999",
         date = "2024-01-11",
         images = listOf(
-            "https://na.rdcpix.com/63bc3db5f65286a1fb4e2b1af9e14591w-c1980730521srd_q80.jpg",
-            "https://www.montgomeryhomes.com.au/wp-content/uploads/2022/05/Montgomery-Homes-Display-Home-Bellevue-288-facade.jpg",
+            "https://www.propertypro.ng/blog/wp-content/uploads/2023/07/pexels-max-rahubovskiy-6782426-780x470.jpg",
+            "https://photos.spotahome.com/fsobscale_1600_900_nonverified_ur_15_50/68d6b48c6f36063742fa01bdc39b3f55c4775e08d646ae232cc80746.jpg",
             "https://www.bankrate.com/2017/10/17165457/what-to-know-before-you-buy-a-condo.jpg"
         ),
         facilityList = listOf(
@@ -347,8 +347,8 @@ val sampleRentDetailItems = listOf(
         creatorId = "999",
         date = "2024-01-16",
         images = listOf(
-            "https://na.rdcpix.com/63bc3db5f65286a1fb4e2b1af9e14591w-c1980730521srd_q80.jpg",
-            "https://www.montgomeryhomes.com.au/wp-content/uploads/2022/05/Montgomery-Homes-Display-Home-Bellevue-288-facade.jpg",
+            "https://www.propertypro.ng/blog/wp-content/uploads/2023/07/pexels-max-rahubovskiy-6782426-780x470.jpg",
+            "https://photos.spotahome.com/fsobscale_1600_900_nonverified_ur_15_50/68d6b48c6f36063742fa01bdc39b3f55c4775e08d646ae232cc80746.jpg",
             "https://www.bankrate.com/2017/10/17165457/what-to-know-before-you-buy-a-condo.jpg"
         ),
         facilityList = listOf(
@@ -372,8 +372,8 @@ val sampleRentDetailItems = listOf(
         creatorId = "999",
         date = "2024-01-07",
         images = listOf(
-            "https://na.rdcpix.com/63bc3db5f65286a1fb4e2b1af9e14591w-c1980730521srd_q80.jpg",
-            "https://www.montgomeryhomes.com.au/wp-content/uploads/2022/05/Montgomery-Homes-Display-Home-Bellevue-288-facade.jpg",
+            "https://www.propertypro.ng/blog/wp-content/uploads/2023/07/pexels-max-rahubovskiy-6782426-780x470.jpg",
+            "https://photos.spotahome.com/fsobscale_1600_900_nonverified_ur_15_50/68d6b48c6f36063742fa01bdc39b3f55c4775e08d646ae232cc80746.jpg",
             "https://www.bankrate.com/2017/10/17165457/what-to-know-before-you-buy-a-condo.jpg"
         ),
         facilityList = listOf(
@@ -398,8 +398,8 @@ val sampleRentDetailItems = listOf(
         creatorId = "999",
         date = "2024-01-19",
         images = listOf(
-            "https://na.rdcpix.com/63bc3db5f65286a1fb4e2b1af9e14591w-c1980730521srd_q80.jpg",
-            "https://www.montgomeryhomes.com.au/wp-content/uploads/2022/05/Montgomery-Homes-Display-Home-Bellevue-288-facade.jpg",
+            "https://www.propertypro.ng/blog/wp-content/uploads/2023/07/pexels-max-rahubovskiy-6782426-780x470.jpg",
+            "https://photos.spotahome.com/fsobscale_1600_900_nonverified_ur_15_50/68d6b48c6f36063742fa01bdc39b3f55c4775e08d646ae232cc80746.jpg",
             "https://www.bankrate.com/2017/10/17165457/what-to-know-before-you-buy-a-condo.jpg"
         ),
         facilityList = listOf(
@@ -423,8 +423,8 @@ val sampleRentDetailItems = listOf(
         creatorId = "999",
         date = "2024-01-24",
         images = listOf(
-            "https://na.rdcpix.com/63bc3db5f65286a1fb4e2b1af9e14591w-c1980730521srd_q80.jpg",
-            "https://www.montgomeryhomes.com.au/wp-content/uploads/2022/05/Montgomery-Homes-Display-Home-Bellevue-288-facade.jpg",
+            "https://www.propertypro.ng/blog/wp-content/uploads/2023/07/pexels-max-rahubovskiy-6782426-780x470.jpg",
+            "https://photos.spotahome.com/fsobscale_1600_900_nonverified_ur_15_50/68d6b48c6f36063742fa01bdc39b3f55c4775e08d646ae232cc80746.jpg",
             "https://www.bankrate.com/2017/10/17165457/what-to-know-before-you-buy-a-condo.jpg"
         ),
         facilityList = listOf(
@@ -449,8 +449,8 @@ val sampleRentDetailItems = listOf(
         creatorId = "999",
         date = "2024-01-13",
         images = listOf(
-            "https://na.rdcpix.com/63bc3db5f65286a1fb4e2b1af9e14591w-c1980730521srd_q80.jpg",
-            "https://www.montgomeryhomes.com.au/wp-content/uploads/2022/05/Montgomery-Homes-Display-Home-Bellevue-288-facade.jpg",
+            "https://www.propertypro.ng/blog/wp-content/uploads/2023/07/pexels-max-rahubovskiy-6782426-780x470.jpg",
+            "https://photos.spotahome.com/fsobscale_1600_900_nonverified_ur_15_50/68d6b48c6f36063742fa01bdc39b3f55c4775e08d646ae232cc80746.jpg",
             "https://www.bankrate.com/2017/10/17165457/what-to-know-before-you-buy-a-condo.jpg"
         ),
         facilityList = listOf(
@@ -474,8 +474,8 @@ val sampleRentDetailItems = listOf(
         creatorId = "999",
         date = "2024-01-21",
         images = listOf(
-            "https://na.rdcpix.com/63bc3db5f65286a1fb4e2b1af9e14591w-c1980730521srd_q80.jpg",
-            "https://www.montgomeryhomes.com.au/wp-content/uploads/2022/05/Montgomery-Homes-Display-Home-Bellevue-288-facade.jpg",
+            "https://www.propertypro.ng/blog/wp-content/uploads/2023/07/pexels-max-rahubovskiy-6782426-780x470.jpg",
+            "https://photos.spotahome.com/fsobscale_1600_900_nonverified_ur_15_50/68d6b48c6f36063742fa01bdc39b3f55c4775e08d646ae232cc80746.jpg",
             "https://www.bankrate.com/2017/10/17165457/what-to-know-before-you-buy-a-condo.jpg"
         ),
         facilityList = listOf(
@@ -500,8 +500,8 @@ val sampleRentDetailItems = listOf(
         creatorId = "999",
         date = "2024-01-09",
         images = listOf(
-            "https://na.rdcpix.com/63bc3db5f65286a1fb4e2b1af9e14591w-c1980730521srd_q80.jpg",
-            "https://www.montgomeryhomes.com.au/wp-content/uploads/2022/05/Montgomery-Homes-Display-Home-Bellevue-288-facade.jpg",
+            "https://www.propertypro.ng/blog/wp-content/uploads/2023/07/pexels-max-rahubovskiy-6782426-780x470.jpg",
+            "https://photos.spotahome.com/fsobscale_1600_900_nonverified_ur_15_50/68d6b48c6f36063742fa01bdc39b3f55c4775e08d646ae232cc80746.jpg",
             "https://www.bankrate.com/2017/10/17165457/what-to-know-before-you-buy-a-condo.jpg"
         ),
         facilityList = listOf(
