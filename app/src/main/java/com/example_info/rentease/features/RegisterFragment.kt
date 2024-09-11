@@ -21,6 +21,7 @@ import com.example_info.rentease.databinding.FragmentRegisterBinding
 import com.example_info.rentease.di.AliceInitializer
 import com.example_info.rentease.navigation.AliceNavigator
 import com.example_info.rentease.preferences.MainPreferences
+import com.example_info.rentease.util.helper.FileHelper
 import com.example_info.rentease.util.helper.showErrorAndFocus
 import com.example_info.rentease.util.helper.showToast
 import com.example_info.rentease.util.helper.tryParseToUri
@@ -65,7 +66,8 @@ class RegisterFragment : Fragment() {
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == Activity.RESULT_OK && result.data != null) {
                     val uri: Uri = result.data?.data ?: return@registerForActivityResult
-                    posterImage = uri
+                    val cachedUri = FileHelper.saveImageToCache(requireContext(), uri)
+                    posterImage = cachedUri
                     refreshPosterImage()
                 }
             }

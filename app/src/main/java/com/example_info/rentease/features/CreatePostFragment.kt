@@ -33,6 +33,8 @@ import com.example_info.rentease.model.RentDetailItem
 import com.example_info.rentease.navigation.AliceNavigator
 import com.example_info.rentease.preferences.MainPreferences
 import com.example_info.rentease.util.helper.DateHelper
+import com.example_info.rentease.util.helper.FileHelper
+import com.example_info.rentease.util.helper.doAsSuspend
 import com.example_info.rentease.util.helper.showToast
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -91,10 +93,12 @@ class CreatePostFragment : Fragment() {
 
     private fun setUpOtherImagesAdapter() {
         miniImageAdapter = MiniImageAdapter { uriToDelete ->
-            miniImagesState.value
-            if (miniImagesState.value.contains(uriToDelete)) {
-                _miniImagesState.update { list ->
-                    list.filter { it != uriToDelete }
+            doAsSuspend {
+                if (!FileHelper.deleteCachedImageByUri(uriToDelete)) return@doAsSuspend
+                if (miniImagesState.value.contains(uriToDelete)) {
+                    _miniImagesState.update { list ->
+                        list.filter { it != uriToDelete }
+                    }
                 }
             }
         }
@@ -132,7 +136,8 @@ class CreatePostFragment : Fragment() {
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == Activity.RESULT_OK && result.data != null) {
                     val uri: Uri = result.data?.data ?: return@registerForActivityResult
-                    posterImage = uri
+                    posterImage = FileHelper.saveImageToCache(requireContext(), uri)
+                        ?: return@registerForActivityResult
                     refreshPosterImage()
                 }
             }
@@ -143,8 +148,10 @@ class CreatePostFragment : Fragment() {
             registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
                 if (result.resultCode == Activity.RESULT_OK && result.data != null) {
                     val uri: Uri = result.data?.data ?: return@registerForActivityResult
+                    val cacheUri = FileHelper.saveImageToCache(requireContext(), uri)
+                        ?: return@registerForActivityResult
                     _miniImagesState.update {
-                        it + uri
+                        it + cacheUri
                     }
                 }
             }
